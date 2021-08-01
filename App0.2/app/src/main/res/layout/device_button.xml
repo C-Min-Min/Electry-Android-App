@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="*"
+    tools:context=".fragments.DevicesFragment"
+    android:id="@+id/Devices_Layout">
+
+<TableRow
+    android:id="@+id/table_row">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/button_layout">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/device_3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dip"
+            android:layout_marginTop="10dip"
+            android:layout_marginEnd="15dip"
+            android:layout_weight="1"
+            android:backgroundTint="#eeeeee"
+            android:text="Bedroom Lights\n\nOn"
+            android:textAlignment="viewStart"
+            android:textColor="#3c3b3d"
+            android:textSize="20dip"
+            app:cornerRadius="15dp"
+            app:icon="@drawable/lightbulb"
+            app:iconGravity="start"
+            app:iconTint="#3c3b3d"
+            app:iconPadding="50dip"
+            app:layout_constraintDimensionRatio="1:1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</TableRow>
+
+</TableLayout>
