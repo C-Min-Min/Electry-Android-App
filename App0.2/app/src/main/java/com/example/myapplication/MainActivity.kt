@@ -35,17 +35,7 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
-        val tl = Devices_Layout
-        val button = button_layout
-        val tr1 = TableRow(this)
-
-        var layoutParams = TableRow.LayoutParams(
-            TableRow.LayoutParams.WRAP_CONTENT,
-            TableRow.LayoutParams.WRAP_CONTENT)
-        layoutParams.column=1
-        tr1.addView(button, layoutParams)
-        tl.addView(tr1)
+        
 
     }
 
