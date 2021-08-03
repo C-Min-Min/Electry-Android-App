@@ -6,30 +6,46 @@
     android:layout_height="match_parent"
     android:stretchColumns="*"
     tools:context=".fragments.DevicesFragment"
-    android:id="@+id/Devices_Layout">
-    
+    android:id="@+id/root_view">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/button_layout">
+        android:layout_height="wrap_content"
+        android:id="@+id/recycle_device"
+        android:orientation="horizontal"
+        android:background="@drawable/button_background">
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/device_3"
+        <ImageView
+            android:id="@+id/device_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/lightbulb" />
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dip"
-            android:layout_marginEnd="15dip"
-            android:layout_weight="1"
-            android:backgroundTint="#eeeeee"
-            android:text="Device Name\n\nOff"
-            android:textAlignment="viewStart"
-            android:textColor="#3c3b3d"
-            android:textSize="20dip"
-            app:cornerRadius="15dp"
-            app:icon="@drawable/lightbulb"
-            app:iconGravity="start"
-            app:iconTint="#3c3b3d" />
+            android:orientation="vertical"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:paddingStart="10dp">
+
+            <TextView
+                android:id="@+id/device_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Device Name"
+                android:textSize="20sp"
+                android:textColor="#3c3b3d"/>
+
+            <TextView
+                android:id="@+id/device_state"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Off"
+                android:textSize="16sp"
+                android:textColor="#3c3b3d"/>
+
+        </LinearLayout>
+
 
     </LinearLayout>
 

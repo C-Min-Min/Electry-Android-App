@@ -2,14 +2,14 @@ package com.example.myapplication.API
 
 import com.example.myapplication.Model.EvenDevices
 import com.example.myapplication.Model.OddDevices
+import io.reactivex.Observable
 import retrofit2.http.GET
-import java.util.*
 
 
 interface SearchAPI {
     @get:GET("odd_devices")
-    val OddDevicesList:List<OddDevices>
+    val OddDevicesList:Observable<List<OddDevices>>
 
     @get:GET("even_devices")
-    val EvenDevicesList:List<EvenDevices>
+    val EvenDevicesList:Observable<List<EvenDevices>>
 }
