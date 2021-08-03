@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.API.RetrofitClient
 import com.example.myapplication.API.SearchAPI
+import com.example.myapplication.Adapter.EvenDeviceAdapter
 import com.example.myapplication.Adapter.OddDeviceAdapter
 import com.example.myapplication.R
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -41,7 +42,8 @@ class DevicesFragment : Fragment() {
     internal lateinit var myAPI: SearchAPI
     internal var compositeDisposable = CompositeDisposable()
     internal lateinit var layoutManager: LinearLayoutManager
-    internal lateinit var adapter: OddDeviceAdapter
+    internal lateinit var Oddadapter: OddDeviceAdapter
+    internal lateinit var Evenadapter: EvenDeviceAdapter
 
     private val api:SearchAPI
     get() = RetrofitClient.getInstance().create(SearchAPI::class.java)
@@ -55,8 +57,10 @@ class DevicesFragment : Fragment() {
             //Init API
             myAPI = api;
             layoutManager = LinearLayoutManager(thiscontext)
+            even_list.layoutManager = layoutManager
             odd_list.layoutManager = layoutManager
             odd_list.addItemDecoration(DividerItemDecoration(thiscontext, layoutManager.orientation))
+            even_list.addItemDecoration(DividerItemDecoration(thiscontext, layoutManager.orientation))
 
             getAllDevices()
         }
@@ -67,8 +71,17 @@ class DevicesFragment : Fragment() {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({ devices ->
-                adapter = OddDeviceAdapter(thiscontext, devices)
-                odd_list.adapter = adapter
+                Oddadapter = OddDeviceAdapter(thiscontext, devices)
+                odd_list.adapter = Oddadapter
+            },{
+                Toast.makeText(thiscontext, "Not found", Toast.LENGTH_SHORT).show()
+            }))
+        compositeDisposable.addAll(myAPI.EvenDevicesList
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ devices ->
+                Evenadapter = EvenDeviceAdapter(thiscontext,devices)
+                even_list.adapter = Evenadapter
             },{
                 Toast.makeText(thiscontext, "Not found", Toast.LENGTH_SHORT).show()
             }))
