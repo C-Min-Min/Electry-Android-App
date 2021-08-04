@@ -29,6 +29,7 @@ app.get("/odd_devices",(req, res, next)=>{
             res.end(JSON.stringify('No Devices here'));
         }
     });
+    console.log("Get on odd_devices made")
 });
 
 //GET ALL EVEN DEVICES from DATABASE
@@ -43,6 +44,7 @@ app.get("/even_devices",(req, res, next)=>{
             res.end(JSON.stringify('No Devices here'));
         }
     });
+    console.log("Get on even_devices made")
 });
 
 //Start Server

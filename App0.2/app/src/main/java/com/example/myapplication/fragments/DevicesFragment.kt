@@ -2,116 +2,100 @@ package com.example.myapplication.fragments
 
 import android.content.Context
 import android.os.Bundle
+import android.os.Handler
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.myapplication.API.RetrofitClient
+import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.API.SearchAPI
 import com.example.myapplication.Adapter.EvenDeviceAdapter
 import com.example.myapplication.Adapter.OddDeviceAdapter
+import com.example.myapplication.Model.DeviceViewModel
+import com.example.myapplication.Model.EvenDevices
+import com.example.myapplication.Model.OddDevices
 import com.example.myapplication.R
-import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.fragment_devices.*
+import kotlinx.coroutines.delay
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
-/**
- * A simple [Fragment] subclass.
- * Use the [DevicesFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class DevicesFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onStop(){
-        compositeDisposable.clear()
-        super.onStop()
-    }
-    lateinit var thiscontext: Context
-    internal lateinit var myAPI: SearchAPI
-    internal var compositeDisposable = CompositeDisposable()
-    internal lateinit var layoutManager: LinearLayoutManager
-    internal lateinit var Oddadapter: OddDeviceAdapter
-    internal lateinit var Evenadapter: EvenDeviceAdapter
 
-    private val api:SearchAPI
-    get() = RetrofitClient.getInstance().create(SearchAPI::class.java)
+    //override fun onStop(){
+    //    compositeDisposable.clear()
+    //    super.onStop()
+    //}
+    //lateinit var thiscontext: Context
+    //internal lateinit var myAPI: SearchAPI
+    //internal var compositeDisposable = CompositeDisposable()
+
+    internal lateinit var OddAdapter: OddDeviceAdapter
+    internal lateinit var EvenAdapter: EvenDeviceAdapter
+    lateinit var odd_list:RecyclerView
+    lateinit var even_list:RecyclerView
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-            thiscontext = requireContext()
-            //Init API
-            myAPI = api;
-            layoutManager = LinearLayoutManager(thiscontext)
-            even_list.layoutManager = layoutManager
-            odd_list.layoutManager = layoutManager
-            odd_list.addItemDecoration(DividerItemDecoration(thiscontext, layoutManager.orientation))
-            even_list.addItemDecoration(DividerItemDecoration(thiscontext, layoutManager.orientation))
 
-            getAllDevices()
+
         }
     }
 
-    private fun getAllDevices() {
-        compositeDisposable.addAll(myAPI.OddDevicesList
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ devices ->
-                Oddadapter = OddDeviceAdapter(thiscontext, devices)
-                odd_list.adapter = Oddadapter
-            },{
-                Toast.makeText(thiscontext, "Not found", Toast.LENGTH_SHORT).show()
-            }))
-        compositeDisposable.addAll(myAPI.EvenDevicesList
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe({ devices ->
-                Evenadapter = EvenDeviceAdapter(thiscontext,devices)
-                even_list.adapter = Evenadapter
-            },{
-                Toast.makeText(thiscontext, "Not found", Toast.LENGTH_SHORT).show()
-            }))
-    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_devices, container, false)
+        /*thiscontext = requireContext()
+        //Init API
+
+        myAPI = api;
+        odd_list = view.findViewById(R.id.odd_list)
+        even_list = view.findViewById(R.id.even_list)
+        getAllDevices()
+
+        even_list.setHasFixedSize(true)
+        odd_list.setHasFixedSize(true)
+        even_list.layoutManager = LinearLayoutManager(view.context)
+        odd_list.layoutManager = LinearLayoutManager(view.context)*/
+        var OddList:ArrayList<OddDevices> = ArrayList()
+        var EvenList:ArrayList<EvenDevices> = ArrayList()
+        val view:View = inflater.inflate(R.layout.fragment_devices,container,false)
+        odd_list = view.findViewById(R.id.odd_list)
+        even_list = view.findViewById(R.id.even_list)
+        val viewModel = ViewModelProvider(this).get(DeviceViewModel::class.java)
+        viewModel.getOddDevice()
+        viewModel.OddResponseList.observe(viewLifecycleOwner, Observer {
+            OddList = OddDevices.createOddList(it)
+        })
+        Log.d("Devices_after",OddList.size.toString())
+        viewModel.getEvenDevice()
+        viewModel.EvenResponseList.observe(viewLifecycleOwner, Observer {
+            EvenList = EvenDevices.createEvenList(it)
+        })
+        Handler().postDelayed({
+            OddAdapter = OddDeviceAdapter(OddList)
+            EvenAdapter = EvenDeviceAdapter(EvenList)
+
+            even_list.layoutManager = LinearLayoutManager(view.context)
+            odd_list.layoutManager = LinearLayoutManager(view.context)
+            even_list.adapter = EvenAdapter
+            odd_list.adapter = OddAdapter
+
+
+        },90)
+        return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment DevicesFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            DevicesFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

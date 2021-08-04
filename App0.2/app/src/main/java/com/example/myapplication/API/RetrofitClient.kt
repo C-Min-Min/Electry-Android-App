@@ -6,14 +6,13 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 
 object RetrofitClient {
-    private var instance: Retrofit?=null
 
-    fun getInstance():Retrofit{
-        if(instance == null)
-            instance = Retrofit.Builder().baseUrl("http://127.0.0.1:3000/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-                .build()
-        return instance!!
+    val retrofit by lazy {
+        Retrofit.Builder()
+            .baseUrl("http://10.0.2.2:3000/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build()
+            .create(SearchAPI::class.java)
     }
 }

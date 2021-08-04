@@ -2,14 +2,18 @@ package com.example.myapplication
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.example.myapplication.fragments.*
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.API.RetrofitClient
 import com.example.myapplication.API.SearchAPI
 import com.example.myapplication.Adapter.OddDeviceAdapter
+import com.example.myapplication.Model.DeviceViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
@@ -47,7 +51,6 @@ class MainActivity : AppCompatActivity() {
             }
             true
         }
-
 
 
     }
