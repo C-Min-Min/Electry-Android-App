@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 5.1.1
 -- https://www.phpmyadmin.net/
 --
--- Хост: 127.0.0.1
--- Време на генериране:  2 авг 2021 в 07:22
--- Версия на сървъра: 10.4.17-MariaDB
--- Версия на PHP: 8.0.2
+-- Host: 127.0.0.1
+-- Generation Time: Aug 05, 2021 at 02:02 PM
+-- Server version: 10.4.20-MariaDB
+-- PHP Version: 8.0.8
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,37 +18,40 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- База данни: `electry`
+-- Database: `electry`
 --
 
 -- --------------------------------------------------------
 
 --
--- Структура на таблица `devices`
+-- Table structure for table `devices`
 --
 
 CREATE TABLE `devices` (
   `DEV_ID` int(11) NOT NULL,
   `DEV_DESC` text NOT NULL,
   `IMAGE_PATH` varchar(20) NOT NULL,
-  `DEV_STATE` tinyint(1) DEFAULT NULL
+  `DEV_STATE` tinyint(1) DEFAULT 0,
+  `DEV_FAV` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
--- Схема на данните от таблица `devices`
+-- Dumping data for table `devices`
 --
 
-INSERT INTO `devices` (`DEV_ID`, `DEV_DESC`, `IMAGE_PATH`, `DEV_STATE`) VALUES
-(1, 'Bedroom Lights', 'Lights', NULL),
-(2, 'Bedroom PC', 'Computer', NULL),
-(3, 'Living Room Lights', 'Lights', NULL);
+INSERT INTO `devices` (`DEV_ID`, `DEV_DESC`, `IMAGE_PATH`, `DEV_STATE`, `DEV_FAV`) VALUES
+(1, 'Bedroom Lights', 'Lights', 1, 1),
+(2, 'Bedroom PC', 'Computer', 0, 1),
+(3, 'Living Room Lights', 'Lights', 1, 0),
+(4, 'Living Room TV', 'TV', 0, 0),
+(5, 'Oven', 'Oven', 0, 0);
 
 --
 -- Indexes for dumped tables
 --
 
 --
--- Индекси за таблица `devices`
+-- Indexes for table `devices`
 --
 ALTER TABLE `devices`
   ADD PRIMARY KEY (`DEV_ID`);
@@ -61,7 +64,7 @@ ALTER TABLE `devices`
 -- AUTO_INCREMENT for table `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `DEV_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `DEV_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
