@@ -17,9 +17,9 @@ app.use(express.static(publicDir));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
 
-//GET ALL ODD DEVICES from DATABASE
-app.get("/odd_devices",(req, res, next)=>{
-    con.query('SELECT * FROM devices WHERE (DEV_ID % 2) != 0', function(error, result, fields){
+//GET ALL DEVICES from DATABASE
+app.get("/devices",(req, res, next)=>{
+    con.query('SELECT * FROM devices ', function(error, result, fields){
         con.on('error', function(err){
             console.log('[MySQL]ERROR',err);
         });
@@ -29,23 +29,8 @@ app.get("/odd_devices",(req, res, next)=>{
             res.end(JSON.stringify('No Devices here'));
         }
     });
-    console.log("Get on odd_devices made")
 });
 
-//GET ALL EVEN DEVICES from DATABASE
-app.get("/even_devices",(req, res, next)=>{
-    con.query('SELECT * FROM devices WHERE (DEV_ID % 2) = 0', function(error, result, fields){
-        con.on('error', function(err){
-            console.log('[MySQL]ERROR',err);
-        });
-        if(result && result.length){
-            res.end(JSON.stringify(result));
-        }else{
-            res.end(JSON.stringify('No Devices here'));
-        }
-    });
-    console.log("Get on even_devices made")
-});
 
 //Start Server
 app.listen(3000, ()=>{

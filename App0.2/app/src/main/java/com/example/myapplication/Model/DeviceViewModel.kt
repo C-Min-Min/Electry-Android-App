@@ -8,18 +8,11 @@ import kotlinx.coroutines.launch
 
 class DeviceViewModel : ViewModel() {
 
-    val OddResponseList: MutableLiveData<List<OddDevices>> = MutableLiveData()
-    val EvenResponseList: MutableLiveData<List<EvenDevices>> = MutableLiveData()
+    val ResponseList: MutableLiveData<List<Devices>> = MutableLiveData()
 
-    fun getOddDevice() {
+    fun getDevice() {
         viewModelScope.launch {
-            OddResponseList.value = RetrofitClient.retrofit.getOddDevice()
-        }
-    }
-
-    fun getEvenDevice() {
-        viewModelScope.launch {
-            EvenResponseList.value = RetrofitClient.retrofit.getEvenDevice()
+            ResponseList.value = RetrofitClient.retrofit.getDevice()
         }
     }
 }
