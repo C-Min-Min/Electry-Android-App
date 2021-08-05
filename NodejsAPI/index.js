@@ -29,6 +29,7 @@ app.get("/devices",(req, res, next)=>{
             res.end(JSON.stringify('No Devices here'));
         }
     });
+    console.log("get on devices made")
 });
 
 

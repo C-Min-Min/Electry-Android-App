@@ -1,12 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragments.HomeFragment">
 
+    <TextView
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Home"
+        android:textColor="#3c3b3d"
+        android:textSize="45dp"
+        android:textStyle="bold" />
 
+    <TextView
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="On"
+        android:textColor="#3c3b3d"
+        android:textSize="35dp"
+        android:textStyle="bold" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/on_list"
+        android:paddingStart="10dp"/>
 
+    <TextView
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Favs"
+        android:textColor="#3c3b3d"
+        android:textSize="35dp"
+        android:textStyle="bold" />
 
-</FrameLayout>
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/favs_list"
+        android:paddingStart="10dp"/>
+
+    <TextView
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
+        android:text="Stats"
+        android:textColor="#3c3b3d"
+        android:textSize="35dp"
+        android:textStyle="bold" />
+
+</TableLayout>

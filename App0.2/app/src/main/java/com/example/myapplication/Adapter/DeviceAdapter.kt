@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Model.Devices
 import com.example.myapplication.R
@@ -13,7 +14,7 @@ class DeviceAdapter(private var DeviceList:List<Devices>):RecyclerView.Adapter<D
     inner class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView) {
         val device_name = itemView.findViewById(R.id.device_name) as TextView
         val device_state = itemView.findViewById(R.id.device_state) as TextView
-
+        val root_view = itemView.findViewById(R.id.root_view) as CardView
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DeviceAdapter.MyViewHolder {
@@ -30,8 +31,10 @@ class DeviceAdapter(private var DeviceList:List<Devices>):RecyclerView.Adapter<D
         device_name.text = device.DEV_DESC
         if(device.DEV_STATE == 1){
             device_state.text = "On"
+            holder.root_view.setBackgroundResource(R.drawable.button_on)
         }else if(device.DEV_STATE == 0){
             device_state.text = "Off"
+            holder.root_view.setBackgroundResource(R.drawable.button_off)
         }
 
     }

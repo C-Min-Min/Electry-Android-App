@@ -19,7 +19,7 @@ import com.example.myapplication.R
 
 class DevicesFragment : Fragment() {
 
-    internal lateinit var Adapter: DeviceAdapter
+    private lateinit var Adapter: DeviceAdapter
     lateinit var device_list:RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -29,8 +29,6 @@ class DevicesFragment : Fragment() {
 
         }
     }
-
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,7 +48,7 @@ class DevicesFragment : Fragment() {
             Adapter = DeviceAdapter(List)
             device_list.layoutManager = GridLayoutManager(view.context,2)
             device_list.adapter = Adapter
-        },90)
+        },120)
         return view
     }
 
