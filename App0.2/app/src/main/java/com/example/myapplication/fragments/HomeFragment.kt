@@ -6,8 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Adapter
-import android.widget.GridLayout
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -16,7 +15,7 @@ import com.example.myapplication.Model.DeviceViewModel
 import com.example.myapplication.Model.Devices
 import com.example.myapplication.R
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), DeviceAdapter.OnDeviceClickListener {
 
     private lateinit var OnAdapter: DeviceAdapter
     private lateinit var FavsAdapter: DeviceAdapter
@@ -47,14 +46,18 @@ class HomeFragment : Fragment() {
             FavsList = Devices.createFavsList(it)
         })
         Handler().postDelayed({
-            OnAdapter = DeviceAdapter(OnList)
-            FavsAdapter = DeviceAdapter(FavsList)
+            OnAdapter = DeviceAdapter(OnList,this)
+            FavsAdapter = DeviceAdapter(FavsList,this)
             on_list.layoutManager = GridLayoutManager(view.context,2)
             favs_list.layoutManager = GridLayoutManager(view.context,2)
             on_list.adapter = OnAdapter
             favs_list.adapter = FavsAdapter
         }, 120)
         return view
+    }
+
+    override fun OnDeviceClick(position: Int) {
+        Toast.makeText(context, "Item $position clicked", Toast.LENGTH_SHORT).show()
     }
 
 }

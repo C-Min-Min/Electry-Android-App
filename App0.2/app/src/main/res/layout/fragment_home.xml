@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/on_list"
-        android:paddingStart="10dp"/>
+        />
 
     <TextView
         android:layout_marginStart="30dp"
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:id="@+id/favs_list"
-        android:paddingStart="10dp"/>
+        />
 
     <TextView
         android:layout_marginStart="30dp"

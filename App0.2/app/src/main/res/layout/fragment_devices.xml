@@ -22,20 +22,7 @@
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
             android:id="@+id/device_list"
-            android:paddingStart="10dp"
             />
-
-
-
-        <!--<androidx.recyclerview.widget.RecyclerView
-            android:layout_height="wrap_content"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:id="@+id/even_list"
-
-            android:paddingEnd="10dp"/>-->
-
-
 
     </TableRow>
 
