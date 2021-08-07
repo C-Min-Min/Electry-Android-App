@@ -7,10 +7,14 @@
         <entry key="..\:/Users/HOME/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/drawable/button_on.xml" value="0.23854166666666668" />
         <entry key="..\:/Users/HOME/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/HOME/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/device_button.xml" value="0.22239583333333332" />
-        <entry key="..\:/Users/HOME/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_device_info.xml" value="0.17239583333333333" />
         <entry key="..\:/Users/HOME/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_devices.xml" value="0.22239583333333332" />
         <entry key="..\:/Users/HOME/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_history.xml" value="0.22239583333333332" />
         <entry key="..\:/Users/HOME/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_home.xml" value="0.22239583333333332" />
+        <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/drawable/ios_selector.xml" value="0.13802083333333334" />
+        <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/drawable/ios_track.xml" value="0.13802083333333334" />
+        <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/device_button.xml" value="0.121875" />
+        <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_device_info.xml" value="0.24583333333333332" />
+        <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_home.xml" value="0.24583333333333332" />
       </map>
     </option>
   </component>
