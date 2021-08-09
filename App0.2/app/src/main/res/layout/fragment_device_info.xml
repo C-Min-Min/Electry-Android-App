@@ -4,16 +4,29 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".fragments.DeviceInfoFragment">
+    tools:context=".fragments.DeviceInfoFragment"
+    android:background="#ffffff">
 
     <TextView
-        android:layout_marginStart="30dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="Device"
         android:textColor="#3c3b3d"
-        android:textSize="45dp"
+        android:textSize="50dp"
         android:textStyle="bold"
-        android:id="@+id/DEV_ID"/>
+        android:id="@+id/dev_name"
+        />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/device_show"
+        android:paddingStart="15dp"
+        android:paddingEnd="15dp">
+
+        <include layout="@layout/dev_button_for_info" android:id="@+id/inc_dev"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
     <TextView
         android:layout_marginStart="30dp"
@@ -26,81 +39,71 @@
     <TextView
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
-        android:text="Device settings"
+        android:text="Settings"
         android:textColor="#3c3b3d"
         android:textSize="35dp"
         android:textStyle="bold" />
 
-        <LinearLayout
-            android:orientation="horizontal"
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
-            <TextView
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="2dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#3c3b3d"
-                android:textSize="25dp"
-                android:text="Favourite : "
-                android:layout_marginEnd="20dp"/>
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="edit name"
+            android:textColor="#3c3b3d"
+            app:cornerRadius="50dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textSize="15dp"
+            android:id="@+id/edit_name"/>
 
-            <androidx.appcompat.widget.SwitchCompat
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:thumb="@drawable/ios_selector"
-                app:track="@drawable/ios_track"
-                android:checked="false"
-                android:id="@+id/DEV_FAV" />
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:orientation="horizontal"
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_width="match_parent">
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="edit description"
+            android:textColor="#3c3b3d"
+            app:cornerRadius="50dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textSize="15dp" />
 
-            <TextView
-                android:layout_marginStart="40dp"
-                android:layout_marginBottom="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#3c3b3d"
-                android:textSize="25dp"
-                android:text="Name : "
-                android:layout_marginEnd="20dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="5dp"
-                app:boxBackgroundColor="#eeeeee"
-                app:boxStrokeColor="#3c3b3d"
-                app:boxStrokeWidth="2dp">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:text="Device Name"
-                    android:textColor="#3c3b3d"
-                    android:textSize="20dp"
-                    android:id="@+id/DEV_DESC"/>
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-        </LinearLayout>
-
-        <Button
-            android:layout_width="wrap_content"
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Change Device"
-            android:id="@+id/change_dev"
-            android:layout_marginTop="10dp"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="160dp"
-            android:textColor="#3b3c3d"
-            android:backgroundTint="#eeeeee" />
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="change icon"
+            android:textColor="#3c3b3d"
+            app:cornerRadius="50dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textSize="15dp" />
+
+        <com.google.android.material.button.MaterialButton
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
+            android:backgroundTint="#f0f0f0"
+            android:text="edit name"
+            android:textColor="#dd4047"
+            app:cornerRadius="50dp"
+            android:paddingTop="12dp"
+            android:paddingBottom="12dp"
+            android:textSize="15dp" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
 
 </TableLayout>

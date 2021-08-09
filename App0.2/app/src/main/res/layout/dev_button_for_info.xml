@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:stretchColumns="*"
+    tools:context=".fragments.DevicesFragment"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="15dp"
+    >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="5dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintDimensionRatio="1:1"
+            android:id="@+id/view_root">
+
+            <ImageView
+                android:id="@+id/dev_icon"
+                android:layout_width="60dp"
+                android:layout_height="70dp"
+                android:src="@drawable/lightbulb"
+                android:paddingBottom="7dp"
+                android:paddingStart="7dp"
+                android:paddingTop="14dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:paddingTop="2dp"
+                android:paddingBottom="5dp"
+                android:paddingStart="5dp">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/dev_desc"
+                        android:layout_width="0dp"
+                        android:layout_weight="2"
+                        android:layout_height="wrap_content"
+                        android:text="This is a description of a bedroom light an I'm tesing"
+                        android:fontFamily="@font/productsans_medium"
+                        android:textSize="18sp"
+                        android:textColor="#3c3b3d"
+                        android:padding="10dp"/>
+                    <View
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+
+                <TextView
+                    android:paddingStart="10dp"
+                    android:id="@+id/dev_state"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/productsans_medium"
+                    android:text="Off"
+                    android:textColor="#5F5E60"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+</androidx.cardview.widget.CardView>

@@ -37,7 +37,7 @@ class DeviceAdapter(private var DeviceList:List<Devices>, private val listener: 
         val device : Devices = DeviceList[position]
         val device_name = holder.device_name
         val device_state = holder.device_state
-        device_name.text = device.DEV_DESC
+        device_name.text = device.DEV_NAME
         if(device.DEV_STATE == 1){
             device_state.text = "On"
             holder.root_view.setBackgroundResource(R.drawable.button_on)

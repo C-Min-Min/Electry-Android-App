@@ -11,7 +11,7 @@ object RetrofitClient {
 
     val retrofit by lazy {
         Retrofit.Builder()
-            .baseUrl("http://192.168.88.241:3000/")
+            .baseUrl("http://10.0.2.2:3000/")
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
             .build()
