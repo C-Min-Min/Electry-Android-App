@@ -23,9 +23,9 @@ class DeviceViewModel : ViewModel() {
         }
     }
 
-    fun updateDevice(Id: Int, Fav: Int, Name: String) {
+    fun updateDevice(Id: Int, Change: String, Dev: String) {
         viewModelScope.launch {
-            RetrofitClient.retrofit.updateDevice(Id, Fav, Name)
+            RetrofitClient.retrofit.updateDevice(Id, Change, Dev)
         }
     }
 }

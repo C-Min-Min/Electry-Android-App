@@ -74,7 +74,8 @@
             app:cornerRadius="50dp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:id="@+id/edit_desc"/>
 
         <com.google.android.material.button.MaterialButton
             android:layout_width="match_parent"

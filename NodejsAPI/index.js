@@ -53,20 +53,25 @@ app.post("/search",(req, res, next)=>{
     console.log("post on devices made with id = "+id_search+"")
 });
 
-app.post("/update",(req, res, next)=>{
-    
+app.post("/edit",(req, res, next)=>{
+
     var post_data = req.body
     var id = Number(post_data.id)
-    var fav = Number(post_data.fav)
-    var desc = post_data.desc
+    var change_set = post_data.change_set
+    var dev_x = post_data.dev_x
 
-    var query = "UPDATE devices SET DEV_FAV = "+fav+", DEV_DESC = '"+desc+"' WHERE DEV_ID = "+id+""
+    if(change_set == "dev_desc"){
+        var query = "UPDATE devices SET DEV_DESC = '"+dev_x+"' WHERE DEV_ID = "+id+""
+    }else if(change_set == "dev_name"){
+        var query = "UPDATE devices SET DEV_NAME = '"+dev_x+"' WHERE DEV_ID = "+id+""
+    }
+
     con.query(query,function(error, result, fields){
         con.on('error', function(err){
             console.log('[MySQL]ERROR',err);
         });
     });
-    console.log("update on devices made with id = "+id+"")
+    console.log("update on devices made with id = "+id+" for "+change_set+"")
 })
 
 

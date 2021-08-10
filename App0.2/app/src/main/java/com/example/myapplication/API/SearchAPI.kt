@@ -13,6 +13,6 @@ interface SearchAPI {
     suspend fun searchDevice(@Field("search") Id: Int):List<Devices>
 
     @FormUrlEncoded
-    @POST("update")
-    suspend fun updateDevice(@Field("id") Id: Int, @Field("fav") Fav: Int, @Field("desc") Desc: String)
+    @POST("edit")
+    suspend fun updateDevice(@Field("id") Id: Int, @Field("change_set") Change: String, @Field("dev_x") Dev: String)
 }
