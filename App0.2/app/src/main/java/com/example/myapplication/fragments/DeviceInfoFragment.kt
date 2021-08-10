@@ -12,9 +12,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
-import android.widget.LinearLayout
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.widget.SwitchCompat
 import androidx.cardview.widget.CardView
@@ -31,7 +29,9 @@ import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.dev_button_for_info.view.*
 import kotlinx.android.synthetic.main.fragment_device_info.view.*
+import kotlinx.android.synthetic.main.icon_dialog_box.*
 import kotlinx.android.synthetic.main.name_dialog_box.*
+import kotlinx.android.synthetic.main.name_dialog_box.save_change
 
 class DeviceInfoFragment(Id: Int) : Fragment() {
     val position = Id
@@ -54,6 +54,7 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
         val Dev_name: TextView = view.dev_name
         val Dev_state: TextView = inc.dev_state
         val Dev_back: LinearLayout = inc.view_root
+        val image: ImageView = inc.dev_icon
         val viewModel = ViewModelProvider(this).get(DeviceViewModel::class.java)
         viewModel.searchDevice(position)
         viewModel.ResponseList.observe(viewLifecycleOwner, {
@@ -73,6 +74,13 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
                 Dev_state.text = "Off"
                 Dev_back.setBackgroundResource(R.drawable.button_off)
             }
+            if (device.IMAGE_PATH == "ligthbulb"){
+                image.setImageResource(R.drawable.lightbulb)
+            }else if(device.IMAGE_PATH == "pc"){
+                image.setImageResource(R.drawable.pc)
+            }else if(device.IMAGE_PATH == "console"){
+                image.setImageResource(R.drawable.console)
+            }
         },120)
 
         view.edit_name.setOnClickListener {
@@ -81,6 +89,10 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
 
         view.edit_desc.setOnClickListener {
             showDialog(view.context, searched_device[0].DEV_ID, searched_device[0].DEV_DESC, "dev_desc")
+        }
+
+        view.edit_icon.setOnClickListener {
+            showDialog(view.context, searched_device[0].DEV_ID, searched_device[0].IMAGE_PATH, "dev_icon")
         }
 
         return view
@@ -92,24 +104,63 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
             dialog.setContentView(R.layout.name_dialog_box)
         }else if (change_set == "dev_desc"){
             dialog.setContentView(R.layout.desc_dialog_box)
+        }else if (change_set == "dev_icon"){
+            dialog.setContentView(R.layout.icon_dialog_box)
         }
         val save: MaterialButton = dialog.save_change
-        dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+        dialog.window?.setLayout(
+            ViewGroup.LayoutParams.MATCH_PARENT,
+            ViewGroup.LayoutParams.WRAP_CONTENT
+        )
         dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.set_change.setText(original)
-        save?.setOnClickListener {
-            val name_change = dialog.set_change.text.toString()
-            val viewModel = ViewModelProvider(this).get(DeviceViewModel::class.java)
-            viewModel.updateDevice(dev_id,change_set,name_change)
-            dialog.dismiss()
-            Handler().postDelayed({
-                val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-                val fragmentTransaction: FragmentTransaction = fragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.fl_wrapper, DeviceInfoFragment(position))
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
-            },120)
+        if (change_set == "dev_name" || change_set == "dev_desc") {
+            dialog.set_change.setText(original)
+            save.setOnClickListener {
+                val set_change = dialog.set_change.text.toString()
+                val viewModel = ViewModelProvider(this).get(DeviceViewModel::class.java)
+                viewModel.updateDevice(dev_id, change_set, set_change)
+                dialog.dismiss()
+                Handler().postDelayed({
+                    val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+                    val fragmentTransaction: FragmentTransaction =
+                        fragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.fl_wrapper, DeviceInfoFragment(position))
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                }, 120)
 
+            }
+        }else if (change_set == "dev_icon"){
+            val spinner: Spinner = dialog.icon_spinner
+            ArrayAdapter.createFromResource(
+                context,
+                R.array.icon_array,
+                android.R.layout.simple_spinner_item
+            ).also { adapter ->
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+                spinner.adapter = adapter
+            }
+            if (original == "lightbulb"){
+                spinner.setSelection(0)
+            }else if(original == "pc"){
+                spinner.setSelection(1)
+            }else if(original == "console"){
+                spinner.setSelection(2)
+            }
+            save.setOnClickListener {
+                val image_change: String = spinner.selectedItem.toString()
+                val viewModel = ViewModelProvider(this).get(DeviceViewModel::class.java)
+                viewModel.updateDevice(dev_id, change_set, image_change)
+                dialog.dismiss()
+                Handler().postDelayed({
+                    val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+                    val fragmentTransaction: FragmentTransaction =
+                        fragmentManager.beginTransaction()
+                    fragmentTransaction.replace(R.id.fl_wrapper, DeviceInfoFragment(position))
+                    fragmentTransaction.addToBackStack(null)
+                    fragmentTransaction.commit()
+                }, 120)
+            }
         }
         dialog.show()
     }

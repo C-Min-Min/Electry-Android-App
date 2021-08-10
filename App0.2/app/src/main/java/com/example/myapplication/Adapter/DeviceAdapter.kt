@@ -8,13 +8,15 @@ import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.myapplication.Model.Devices
 import com.example.myapplication.R
+import kotlinx.android.synthetic.main.device_button.view.*
 
 class DeviceAdapter(private var DeviceList:List<Devices>, private val listener: OnDeviceClickListener):RecyclerView.Adapter<DeviceAdapter.MyViewHolder>() {
 
     inner class MyViewHolder(itemView:View):RecyclerView.ViewHolder(itemView), View.OnClickListener {
-        val device_name = itemView.findViewById(R.id.device_name) as TextView
-        val device_state = itemView.findViewById(R.id.device_state) as TextView
-        val root_view = itemView.findViewById(R.id.root_view) as CardView
+        val device_name = itemView.device_name
+        val device_state = itemView.device_state
+        val root_view = itemView.root_view
+        val image = itemView.device_icon
 
         init {
             itemView.setOnClickListener(this)
@@ -45,7 +47,13 @@ class DeviceAdapter(private var DeviceList:List<Devices>, private val listener: 
             device_state.text = "Off"
             holder.root_view.setBackgroundResource(R.drawable.button_off)
         }
-
+        if (device.IMAGE_PATH == "ligthbulb"){
+            holder.image.setImageResource(R.drawable.lightbulb)
+        }else if(device.IMAGE_PATH == "pc"){
+            holder.image.setImageResource(R.drawable.pc)
+        }else if(device.IMAGE_PATH == "console"){
+            holder.image.setImageResource(R.drawable.console)
+        }
     }
 
     override fun getItemCount(): Int {

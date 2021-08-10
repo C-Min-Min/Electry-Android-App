@@ -64,6 +64,8 @@ app.post("/edit",(req, res, next)=>{
         var query = "UPDATE devices SET DEV_DESC = '"+dev_x+"' WHERE DEV_ID = "+id+""
     }else if(change_set == "dev_name"){
         var query = "UPDATE devices SET DEV_NAME = '"+dev_x+"' WHERE DEV_ID = "+id+""
+    }else if(change_set == "dev_icon"){
+        var query = "UPDATE devices SET IMAGE_PATH = '"+dev_x+"' WHERE DEV_ID = "+id+""
     }
 
     con.query(query,function(error, result, fields){
