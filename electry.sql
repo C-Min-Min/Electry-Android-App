@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 05, 2021 at 02:02 PM
+-- Generation Time: Aug 11, 2021 at 02:43 PM
 -- Server version: 10.4.20-MariaDB
 -- PHP Version: 8.0.8
 
@@ -29,8 +29,9 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `devices` (
   `DEV_ID` int(11) NOT NULL,
-  `DEV_DESC` text NOT NULL,
-  `IMAGE_PATH` varchar(20) NOT NULL,
+  `DEV_NAME` text NOT NULL,
+  `DEV_DESC` text NOT NULL DEFAULT 'You haven\'t still given a description about this device',
+  `IMAGE_PATH` varchar(20) NOT NULL DEFAULT 'lightbulb',
   `DEV_STATE` tinyint(1) DEFAULT 0,
   `DEV_FAV` tinyint(4) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -39,12 +40,12 @@ CREATE TABLE `devices` (
 -- Dumping data for table `devices`
 --
 
-INSERT INTO `devices` (`DEV_ID`, `DEV_DESC`, `IMAGE_PATH`, `DEV_STATE`, `DEV_FAV`) VALUES
-(1, 'Bedroom Lights', 'Lights', 1, 1),
-(2, 'Bedroom PC', 'Computer', 0, 1),
-(3, 'Living Room Lights', 'Lights', 1, 0),
-(4, 'Living Room TV', 'TV', 0, 0),
-(5, 'Oven', 'Oven', 0, 0);
+INSERT INTO `devices` (`DEV_ID`, `DEV_NAME`, `DEV_DESC`, `IMAGE_PATH`, `DEV_STATE`, `DEV_FAV`) VALUES
+(1, 'Bedroom Lights', 'Wow, this is a description of Bedroom Lights', 'lightbulb', 1, 1),
+(2, 'Bedroom PC', 'You haven\'t still given a description about this device', 'pc', 0, 1),
+(3, 'Living Room Lights', 'Wow, I added this description of Living Room Lights', 'lightbulb', 0, 0),
+(4, 'Bedroom PS4', 'You haven\'t still given a description about this device', 'console', 0, 0),
+(6, 'Bathroom Lights', 'You haven\'t still given a description about this device', 'lightbulb', 0, 0);
 
 --
 -- Indexes for dumped tables
@@ -64,7 +65,7 @@ ALTER TABLE `devices`
 -- AUTO_INCREMENT for table `devices`
 --
 ALTER TABLE `devices`
-  MODIFY `DEV_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `DEV_ID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

@@ -9,7 +9,7 @@
     <color name="back_color">#ffffff</color>
     <color name="icon_color">#000000</color>
     <color name="dialog_back">#ffffff</color>
-    <color name="yellow">#f7ef95</color>
+    <color name="yellow">#EFE358</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 </resources>
