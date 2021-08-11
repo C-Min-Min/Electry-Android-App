@@ -18,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Edit Description"
-            android:textColor="#3c3b3d"
+            android:textColor="@color/main_text"
             android:textSize="25dp"
             android:gravity="center"/>
 
@@ -28,8 +28,8 @@
             android:layout_height="150dp"
             android:paddingVertical="5dp"
             android:paddingHorizontal="10dp"
-            app:boxBackgroundColor="#eeeeee"
-            app:boxStrokeColor="#3c3b3d"
+            app:boxBackgroundColor="@color/dev_back"
+            app:boxStrokeColor="@color/main_clr"
             app:boxStrokeWidth="2dp"
             app:boxCornerRadiusBottomEnd="15dp"
             app:boxCornerRadiusBottomStart="15dp"
@@ -40,7 +40,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Description of a device you want to change and now I'm doing it to be long so I can test it"
-                android:textColor="#3c3b3d"
+                android:textColor="@color/main_text"
                 android:textSize="20dp"
                 android:id="@+id/set_change"/>
 
@@ -51,9 +51,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
-            android:backgroundTint="#f0f0f0"
+            android:backgroundTint="@color/btn_back"
             android:text="Save changes"
-            android:textColor="#3c3b3d"
+            android:textColor="@color/main_text"
             app:cornerRadius="15dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

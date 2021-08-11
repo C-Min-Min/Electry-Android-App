@@ -30,7 +30,8 @@
                 android:src="@drawable/lightbulb"
                 android:paddingBottom="7dp"
                 android:paddingStart="7dp"
-                android:paddingTop="14dp" />
+                android:paddingTop="14dp"
+                app:tint="@color/icon_color"/>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -49,7 +50,7 @@
                         android:text="This is a description of a bedroom light an I'm tesing"
                         android:fontFamily="@font/productsans_medium"
                         android:textSize="18sp"
-                        android:textColor="#3c3b3d"
+                        android:textColor="@color/main_text"
                         android:padding="10dp"/>
                     <View
                         android:layout_width="0dp"
@@ -65,7 +66,7 @@
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/productsans_medium"
                     android:text="Off"
-                    android:textColor="#5F5E60"
+                    android:textColor="@color/text_sec"
                     android:textSize="16sp" />
 
             </LinearLayout>

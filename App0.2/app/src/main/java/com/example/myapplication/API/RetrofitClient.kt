@@ -9,9 +9,9 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     val clientSetup = OkHttpClient.Builder()
-        .connectTimeout(1, TimeUnit.MINUTES)
-        .writeTimeout(1, TimeUnit.MINUTES) // write timeout
-        .readTimeout(1, TimeUnit.MINUTES) // read timeout
+        .connectTimeout(3, TimeUnit.MINUTES)
+        .writeTimeout(3, TimeUnit.MINUTES) // write timeout
+        .readTimeout(3, TimeUnit.MINUTES) // read timeout
         .build()
     val retrofit by lazy {
         Retrofit.Builder()

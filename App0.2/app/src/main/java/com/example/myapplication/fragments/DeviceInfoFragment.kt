@@ -95,6 +95,17 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
             showDialog(view.context, searched_device[0].DEV_ID, searched_device[0].IMAGE_PATH, "dev_icon")
         }
 
+        view.delete_dev.setOnClickListener {
+            viewModel.deleteDevice(position)
+            Handler().postDelayed({
+                val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+                val fragmentTransaction: FragmentTransaction =
+                    fragmentManager.beginTransaction()
+                fragmentTransaction.replace(R.id.fl_wrapper, HomeFragment())
+                fragmentTransaction.addToBackStack(null)
+                fragmentTransaction.commit()
+            }, 120)
+        }
         return view
     }
 

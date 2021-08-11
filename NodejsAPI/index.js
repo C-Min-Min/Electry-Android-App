@@ -76,7 +76,24 @@ app.post("/edit",(req, res, next)=>{
     console.log("update on devices made with id = "+id+" for "+change_set+"")
 })
 
+app.post("/delete",(req, res, next)=>{
 
+    var post_data = req.body
+    var id = Number(post_data.id)
+
+    var query = "DELETE FROM devices WHERE DEV_ID = "+id+""
+    con.query(query,function(error, result, fields){
+        con.on('error', function(err){
+            console.log('[MySQL]ERROR',err);
+        });
+        if(result && result.length){
+            res.end(JSON.stringify(result));
+        }else{
+            res.end(JSON.stringify('No Devices here'));
+        }
+    });
+    console.log("deleted device with id = "+id+"")
+})
 //Start Server
 app.listen(3000, ()=>{
     console.log('Electry Search API running on port 3000');

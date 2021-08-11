@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    android:background="@color/back_color">
 
     <FrameLayout
         android:id="@+id/fl_wrapper"
@@ -19,8 +20,8 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/top_rounded_corners"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="#3c3b3d"
-        app:itemTextColor="#3c3b3d"
+        app:itemIconTint="#959595"
+        app:itemTextColor="#959595"
         app:menu="@menu/nav_menu"/>
 
 </RelativeLayout>

@@ -5,13 +5,14 @@
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:stretchColumns="*"
-    tools:context=".fragments.DevicesFragment">
+    tools:context=".fragments.DevicesFragment"
+    android:background="@color/back_color">
 
     <TextView
         android:layout_marginStart="30dp"
         android:layout_marginTop="20dp"
         android:text="Devices"
-        android:textColor="#3c3b3d"
+        android:textColor="@color/main_text"
         android:textSize="45dp"
         android:textStyle="bold" />
     <TableRow android:layout_width="match_parent"

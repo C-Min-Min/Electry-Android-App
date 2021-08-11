@@ -5,13 +5,13 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.DeviceInfoFragment"
-    android:background="#ffffff">
+    android:background="@color/back_color">
 
     <TextView
         android:layout_marginStart="20dp"
         android:layout_marginTop="20dp"
         android:text="Device"
-        android:textColor="#3c3b3d"
+        android:textColor="@color/main_text"
         android:textSize="50dp"
         android:textStyle="bold"
         android:id="@+id/dev_name"
@@ -32,7 +32,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:text="Stats"
-        android:textColor="#3c3b3d"
+        android:textColor="@color/main_text"
         android:textSize="35dp"
         android:textStyle="bold" />
 
@@ -40,7 +40,7 @@
         android:layout_marginStart="30dp"
         android:layout_marginTop="10dp"
         android:text="Settings"
-        android:textColor="#3c3b3d"
+        android:textColor="@color/main_text"
         android:textSize="35dp"
         android:textStyle="bold" />
 
@@ -54,9 +54,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:backgroundTint="#f0f0f0"
+            android:backgroundTint="@color/btn_back"
             android:text="edit name"
-            android:textColor="#3c3b3d"
+            android:textColor="@color/main_text"
             app:cornerRadius="50dp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
@@ -68,9 +68,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:backgroundTint="#f0f0f0"
+            android:backgroundTint="@color/btn_back"
             android:text="edit description"
-            android:textColor="#3c3b3d"
+            android:textColor="@color/main_text"
             app:cornerRadius="50dp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
@@ -82,9 +82,9 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:backgroundTint="#f0f0f0"
+            android:backgroundTint="@color/btn_back"
             android:text="change icon"
-            android:textColor="#3c3b3d"
+            android:textColor="@color/main_text"
             app:cornerRadius="50dp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
@@ -96,13 +96,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_marginEnd="30dp"
-            android:backgroundTint="#f0f0f0"
-            android:text="edit name"
-            android:textColor="#dd4047"
+            android:backgroundTint="@color/btn_back"
+            android:text="delete device"
+            android:textColor="#ff0000"
             app:cornerRadius="50dp"
             android:paddingTop="12dp"
             android:paddingBottom="12dp"
-            android:textSize="15dp" />
+            android:textSize="15dp"
+            android:id="@+id/delete_dev"/>
 
     </androidx.appcompat.widget.LinearLayoutCompat>
 

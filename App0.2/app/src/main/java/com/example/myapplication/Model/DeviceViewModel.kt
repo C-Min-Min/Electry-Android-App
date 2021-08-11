@@ -28,4 +28,10 @@ class DeviceViewModel : ViewModel() {
             RetrofitClient.retrofit.updateDevice(Id, Change, Dev)
         }
     }
+
+    fun deleteDevice(Id: Int){
+        viewModelScope.launch {
+            RetrofitClient.retrofit.deleteDevice(Id)
+        }
+    }
 }

@@ -15,4 +15,8 @@ interface SearchAPI {
     @FormUrlEncoded
     @POST("edit")
     suspend fun updateDevice(@Field("id") Id: Int, @Field("change_set") Change: String, @Field("dev_x") Dev: String)
+
+    @FormUrlEncoded
+    @POST("delete")
+    suspend fun deleteDevice(@Field("id") Id: Int)
 }
