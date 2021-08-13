@@ -59,12 +59,7 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
         viewModel.searchDevice(position)
         viewModel.ResponseList.observe(viewLifecycleOwner, {
             searched_device = Devices.createList(it)
-        })
-        Handler().postDelayed({
-
             val device: Devices = searched_device[0]
-            Log.d("DeviceInfo",device.DEV_NAME)
-            Log.d("DeviceInfo", device.DEV_DESC)
             Dev_name.text = device.DEV_NAME
             Dev_desc.text = device.DEV_DESC
             if (device.DEV_STATE == 1){
@@ -81,7 +76,7 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
             }else if(device.IMAGE_PATH == "console"){
                 image.setImageResource(R.drawable.console)
             }
-        },120)
+        })
 
         view.edit_name.setOnClickListener {
             showDialog(view.context, searched_device[0].DEV_ID, searched_device[0].DEV_NAME, "dev_name")
@@ -97,14 +92,12 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
 
         view.delete_dev.setOnClickListener {
             viewModel.deleteDevice(position)
-            Handler().postDelayed({
-                val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
-                val fragmentTransaction: FragmentTransaction =
-                    fragmentManager.beginTransaction()
-                fragmentTransaction.replace(R.id.fl_wrapper, HomeFragment())
-                fragmentTransaction.addToBackStack(null)
-                fragmentTransaction.commit()
-            }, 120)
+            val fragmentManager: FragmentManager = requireActivity().supportFragmentManager
+            val fragmentTransaction: FragmentTransaction =
+                fragmentManager.beginTransaction()
+            fragmentTransaction.replace(R.id.fl_wrapper, HomeFragment())
+            fragmentTransaction.addToBackStack(null)
+            fragmentTransaction.commit()
         }
         return view
     }

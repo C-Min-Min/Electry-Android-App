@@ -45,13 +45,11 @@ class DevicesFragment : Fragment(), DeviceAdapter.OnDeviceClickListener {
         viewModel.getDevice()
         viewModel.ResponseList.observe(viewLifecycleOwner, Observer {
             List = Devices.createList(it)
-        })
-        Log.d("Devices_after",List.size.toString())
-        Handler().postDelayed({
             Adapter = DeviceAdapter(List, this)
             device_list.layoutManager = GridLayoutManager(view.context,2)
             device_list.adapter = Adapter
-        },120)
+        })
+
         return view
     }
 

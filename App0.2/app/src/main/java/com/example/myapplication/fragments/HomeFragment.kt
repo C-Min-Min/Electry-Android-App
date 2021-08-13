@@ -46,15 +46,13 @@ class HomeFragment : Fragment(), DeviceAdapter.OnDeviceClickListener {
         viewModel.ResponseList.observe(viewLifecycleOwner, {
             OnList = Devices.createOnList(it)
             FavsList = Devices.createFavsList(it)
-        })
-        Handler().postDelayed({
             OnAdapter = DeviceAdapter(OnList,this)
             FavsAdapter = DeviceAdapter(FavsList,this)
             on_list.layoutManager = GridLayoutManager(view.context,2)
             favs_list.layoutManager = GridLayoutManager(view.context,2)
             on_list.adapter = OnAdapter
             favs_list.adapter = FavsAdapter
-        }, 120)
+        })
         return view
     }
 
