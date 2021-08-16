@@ -1,3 +1,5 @@
+require('events').EventEmitter.defaultMaxListeners = Infinity; 
+
 var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
@@ -19,7 +21,8 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 //GET ALL DEVICES from DATABASE
 app.get("/devices",(req, res, next)=>{
-    con.query('SELECT * FROM devices ', function(error, result, fields){
+    var get_query = 'SELECT * FROM `devices` ORDER BY DEV_STATE DESC, CASE WHEN IMAGE_PATH = "lightbulb" THEN NULL WHEN IMAGE_PATH = "pc" THEN 1 ELSE IMAGE_PATH END ASC'
+    con.query(get_query, function(error, result, fields){
         con.on('error', function(err){
             console.log('[MySQL]ERROR',err);
         });
