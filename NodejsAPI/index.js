@@ -97,6 +97,26 @@ app.post("/delete",(req, res, next)=>{
     });
     console.log("deleted device with id = "+id+"")
 })
+
+app.post("/measurements",(req, res, next)=>{
+
+    var post_data = req.body
+    var id = Number(post_data.id)
+
+    var query = "SELECT * FROM measurements_00001 WHERE consumer_id="+id+" ORDER BY timestamp"
+    con.query(query, function(error, result, fields){
+        con.on('error', function(err){
+            console.log('[MySQL]ERROR',err);
+        });
+        if(result && result.length){
+            res.end(JSON.stringify(result));
+        }else{
+            res.end(JSON.stringify('No Devices here'));
+        }
+    });
+    console.log("post on measurements with id = "+id+"")
+})
+
 //Start Server
 app.listen(3000, ()=>{
     console.log('Electry Search API running on port 3000');

@@ -1,6 +1,7 @@
 package com.example.myapplication.API
 
 import com.example.myapplication.Model.Devices
+import com.example.myapplication.Model.Measurements
 import retrofit2.http.*
 
 
@@ -19,4 +20,8 @@ interface SearchAPI {
     @FormUrlEncoded
     @POST("delete")
     suspend fun deleteDevice(@Field("id") Id: Int)
+
+    @FormUrlEncoded
+    @POST("measurements")
+    suspend fun getMeasurements(@Field("id") Id: Int):List<Measurements>
 }

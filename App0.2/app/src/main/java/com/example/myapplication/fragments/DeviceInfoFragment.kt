@@ -16,6 +16,8 @@ import androidx.fragment.app.FragmentTransaction
 import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.Model.DeviceViewModel
 import com.example.myapplication.Model.Devices
+import com.example.myapplication.Model.Measurements
+import com.example.myapplication.Model.MeasurementsViewModel
 import com.example.myapplication.R
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.AxisBase
@@ -24,15 +26,13 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
-import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.dev_button_for_info.view.*
-import kotlinx.android.synthetic.main.fragment_device_info.*
 import kotlinx.android.synthetic.main.fragment_device_info.view.*
 import kotlinx.android.synthetic.main.icon_dialog_box.*
 import kotlinx.android.synthetic.main.name_dialog_box.*
 import kotlinx.android.synthetic.main.name_dialog_box.save_change
-import java.security.KeyStore
+import kotlinx.coroutines.tasks.await
 
 class DeviceInfoFragment(Id: Int) : Fragment() {
     val position = Id
@@ -101,39 +101,46 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
             fragmentTransaction.commit()
         }
         val line_chart : LineChart = view.dev_chart
-        val linelist : ArrayList<Entry> = ArrayList()
-        linelist.add(Entry(0f,40f))
-        linelist.add(Entry(1f,67f))
-        linelist.add(Entry(1f,0f))
-        linelist.add(Entry(2f,0f))
-        linelist.add(Entry(2f,41f))
-        linelist.add(Entry(3f,45f))
-        linelist.add(Entry(3f,0f))
-        linelist.add(Entry(4f,0f))
+        val linelist: ArrayList<Entry> = ArrayList()
+        val xValsDateLabel: ArrayList<String> = ArrayList()
+        var searched_measurements: ArrayList<Measurements>
+        val MeasureView = ViewModelProvider(this).get(MeasurementsViewModel::class.java)
+        var date: String
+        var entries: Float = 0F
+        MeasureView.getMeasurements(position)
+        MeasureView.ResponseList.observe(viewLifecycleOwner, {
+            searched_measurements = Measurements.createList(it)
+            if (searched_measurements[0].timestamp.toString().split(" ")[1].split(".")[0] != "00:00:00") {
+                xValsDateLabel.add("00:00:00")
 
-        val lineDataSet = LineDataSet(linelist, "Watts")
-        val lineData = LineData(lineDataSet)
-        line_chart.data = lineData
-        line_chart.legend.isEnabled = false
-        line_chart.axisRight.isEnabled = false
-        lineDataSet.setColors(Color.GRAY)
-        lineDataSet.valueTextColor = Color.BLUE
-        lineDataSet.valueTextSize = 10f
+                linelist.add(Entry(entries, 0f))
+                entries++
+                linelist.add(Entry(entries, 0f))
 
-        val xAxis = line_chart.xAxis
-        xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.labelCount = 5
-        xAxis.granularity = 1f
-        xAxis.isGranularityEnabled = true
+            }
+            for (measure in 0 until searched_measurements.size) {
+                date = searched_measurements[measure].timestamp.toString().split(" ")[0]
 
-        val xValsDateLabel = ArrayList<String>()
-        xValsDateLabel.add("00:00")
-        xValsDateLabel.add("01:40")
-        xValsDateLabel.add("19:43")
-        xValsDateLabel.add("20:50")
-        xValsDateLabel.add("24:00")
+                xValsDateLabel.add(searched_measurements[measure].timestamp.toString().split(" ")[1].split(".")[0])
 
-        xAxis.valueFormatter = (MyValueFormatter(xValsDateLabel))
+                linelist.add(Entry(entries, searched_measurements[measure].power.toFloat()))
+
+                if (searched_measurements[measure].state == 0) {
+                    linelist.add(Entry(entries, 0f))
+                }
+                entries++
+                if (measure + 1 != searched_measurements.size) {
+                    if (searched_measurements[measure + 1].state == 1) {
+                        linelist.add(Entry(entries, 0f))
+                    }
+                }
+
+            }
+            linelist.add(Entry(entries, 0f))
+            xValsDateLabel.add("24:00:00")
+            showChart(linelist, xValsDateLabel, line_chart)
+        })
+
         return view
     }
 
@@ -217,6 +224,25 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
                 return ("").toString()
             }
         }
+    }
+
+    fun showChart(linelist: ArrayList<Entry>, xValsDateLabel: ArrayList<String>, line_chart: LineChart){
+        val lineDataSet = LineDataSet(linelist, "Watts")
+        val lineData = LineData(lineDataSet)
+        line_chart.data = lineData
+        line_chart.legend.isEnabled = false
+        line_chart.axisRight.isEnabled = false
+        lineDataSet.setColors(Color.GRAY)
+        lineDataSet.valueTextColor = Color.BLUE
+        lineDataSet.valueTextSize = 10f
+
+        val xAxis = line_chart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.labelCount = 5
+        xAxis.granularity = 1f
+        xAxis.isGranularityEnabled = true
+
+        xAxis.valueFormatter = (MyValueFormatter(xValsDateLabel))
     }
 
 }
