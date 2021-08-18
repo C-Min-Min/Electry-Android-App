@@ -110,35 +110,42 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
         MeasureView.getMeasurements(position)
         MeasureView.ResponseList.observe(viewLifecycleOwner, {
             searched_measurements = Measurements.createList(it)
-            if (searched_measurements[0].timestamp.toString().split(" ")[1].split(".")[0] != "00:00:00") {
-                xValsDateLabel.add("00:00:00")
+            if(searched_measurements.isNotEmpty()){
+                if (searched_measurements[0].timestamp.toString()
+                        .split(" ")[1].split(".")[0] != "00:00:00"
+                ) {
+                    xValsDateLabel.add("00:00:00")
 
-                linelist.add(Entry(entries, 0f))
-                entries++
-                linelist.add(Entry(entries, 0f))
-
-            }
-            for (measure in 0 until searched_measurements.size) {
-                date = searched_measurements[measure].timestamp.toString().split(" ")[0]
-
-                xValsDateLabel.add(searched_measurements[measure].timestamp.toString().split(" ")[1].split(".")[0])
-
-                linelist.add(Entry(entries, searched_measurements[measure].power.toFloat()))
-
-                if (searched_measurements[measure].state == 0) {
                     linelist.add(Entry(entries, 0f))
+                    entries++
+                    linelist.add(Entry(entries, 0f))
+
                 }
-                entries++
-                if (measure + 1 != searched_measurements.size) {
-                    if (searched_measurements[measure + 1].state == 1) {
+                for (measure in 0 until searched_measurements.size) {
+                    date = searched_measurements[measure].timestamp.toString().split(" ")[0]
+
+                    xValsDateLabel.add(
+                        searched_measurements[measure].timestamp.toString()
+                            .split(" ")[1].split(".")[0]
+                    )
+
+                    linelist.add(Entry(entries, searched_measurements[measure].power.toFloat()))
+
+                    if (searched_measurements[measure].state == 0) {
                         linelist.add(Entry(entries, 0f))
                     }
-                }
+                    entries++
+                    if (measure + 1 != searched_measurements.size) {
+                        if (searched_measurements[measure + 1].state == 1) {
+                            linelist.add(Entry(entries, 0f))
+                        }
+                    }
 
+                }
+                linelist.add(Entry(entries, 0f))
+                xValsDateLabel.add("24:00:00")
+                showChart(linelist, xValsDateLabel, line_chart)
             }
-            linelist.add(Entry(entries, 0f))
-            xValsDateLabel.add("24:00:00")
-            showChart(linelist, xValsDateLabel, line_chart)
         })
 
         return view

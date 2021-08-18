@@ -28,8 +28,6 @@ app.get("/devices",(req, res, next)=>{
         });
         if(result && result.length){
             res.end(JSON.stringify(result));
-        }else{
-            res.end(JSON.stringify('No Devices here'));
         }
     });
     console.log("get on devices made")
@@ -49,8 +47,6 @@ app.post("/search",(req, res, next)=>{
         });
         if(result && result.length){
             res.end(JSON.stringify(result));
-        }else{
-            res.end(JSON.stringify('No Devices here'));
         }
     });
     console.log("post on devices made with id = "+id_search+"")
@@ -91,8 +87,6 @@ app.post("/delete",(req, res, next)=>{
         });
         if(result && result.length){
             res.end(JSON.stringify(result));
-        }else{
-            res.end(JSON.stringify('No Devices here'));
         }
     });
     console.log("deleted device with id = "+id+"")
@@ -110,8 +104,6 @@ app.post("/measurements",(req, res, next)=>{
         });
         if(result && result.length){
             res.end(JSON.stringify(result));
-        }else{
-            res.end(JSON.stringify('No Devices here'));
         }
     });
     console.log("post on measurements with id = "+id+"")
