@@ -1,112 +1,120 @@
 <?xml version="1.0" encoding="utf-8"?>
-<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.DeviceInfoFragment"
     android:background="@color/back_color">
-
-    <TextView
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:text="Device"
-        android:textColor="@color/main_text"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        android:id="@+id/dev_name"
-        />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_height="wrap_content"
+    <TableLayout
         android:layout_width="match_parent"
-        android:id="@+id/device_show"
-        android:paddingStart="15dp"
-        android:paddingEnd="15dp">
-
-        <include layout="@layout/dev_button_for_info" android:id="@+id/inc_dev"/>
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <TextView
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Stats"
-        android:textColor="@color/main_text"
-        android:textSize="35dp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_marginStart="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Settings"
-        android:textColor="@color/main_text"
-        android:textSize="35dp"
-        android:textStyle="bold" />
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/btn_back"
-            android:text="edit name"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:text="Device"
             android:textColor="@color/main_text"
-            app:cornerRadius="50dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:textSize="15dp"
-            android:id="@+id/edit_name"/>
+            android:textSize="50dp"
+            android:textStyle="bold"
+            android:id="@+id/dev_name" />
 
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/device_show"
+            android:paddingStart="15dp"
+            android:paddingEnd="15dp">
+
+            <include layout="@layout/dev_button_for_info" android:id="@+id/inc_dev"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+        <TextView
             android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/btn_back"
-            android:text="edit description"
+            android:layout_marginTop="10dp"
+            android:text="Stats"
             android:textColor="@color/main_text"
-            app:cornerRadius="50dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:textSize="15dp"
-            android:id="@+id/edit_desc"/>
+            android:textSize="35dp"
+            android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="300dp"
+            android:id="@+id/dev_chart"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginVertical="10dp"/>
+
+        <TextView
             android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/btn_back"
-            android:text="change icon"
+            android:layout_marginTop="10dp"
+            android:text="Settings"
             android:textColor="@color/main_text"
-            app:cornerRadius="50dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:textSize="15dp"
-            android:id="@+id/edit_icon"/>
+            android:textSize="35dp"
+            android:textStyle="bold" />
 
-        <com.google.android.material.button.MaterialButton
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"
-            android:layout_marginEnd="30dp"
-            android:backgroundTint="@color/btn_back"
-            android:text="delete device"
-            android:textColor="#ff0000"
-            app:cornerRadius="50dp"
-            android:paddingTop="12dp"
-            android:paddingBottom="12dp"
-            android:textSize="15dp"
-            android:id="@+id/delete_dev"/>
+            android:orientation="vertical">
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@color/btn_back"
+                android:text="edit name"
+                android:textColor="@color/main_text"
+                app:cornerRadius="50dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textSize="15dp"
+                android:id="@+id/edit_name"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@color/btn_back"
+                android:text="edit description"
+                android:textColor="@color/main_text"
+                app:cornerRadius="50dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textSize="15dp"
+                android:id="@+id/edit_desc"/>
 
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@color/btn_back"
+                android:text="change icon"
+                android:textColor="@color/main_text"
+                app:cornerRadius="50dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textSize="15dp"
+                android:id="@+id/edit_icon"/>
 
-</TableLayout>
+            <com.google.android.material.button.MaterialButton
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="30dp"
+                android:layout_marginEnd="30dp"
+                android:backgroundTint="@color/btn_back"
+                android:text="delete device"
+                android:textColor="#ff0000"
+                app:cornerRadius="50dp"
+                android:paddingTop="12dp"
+                android:paddingBottom="12dp"
+                android:textSize="15dp"
+                android:id="@+id/delete_dev"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+
+    </TableLayout>
+
+</androidx.core.widget.NestedScrollView>

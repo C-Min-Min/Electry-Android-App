@@ -38,7 +38,7 @@ class DevicesFragment : Fragment(), DeviceAdapter.OnDeviceClickListener {
         savedInstanceState: Bundle?
     ): View? {
 
-        var List:ArrayList<Devices> = ArrayList()
+        var List:ArrayList<Devices>
         val view:View = inflater.inflate(R.layout.fragment_devices,container,false)
         device_list = view.findViewById(R.id.device_list)
         val viewModel = ViewModelProvider(this).get(DeviceViewModel::class.java)

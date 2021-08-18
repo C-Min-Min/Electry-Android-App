@@ -1,23 +1,15 @@
 package com.example.myapplication.fragments
 
 import android.app.Dialog
-import android.bluetooth.BluetoothClass
 import android.content.Context
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.Window
 import android.widget.*
-import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.widget.SwitchCompat
-import androidx.cardview.widget.CardView
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -25,13 +17,22 @@ import androidx.lifecycle.ViewModelProvider
 import com.example.myapplication.Model.DeviceViewModel
 import com.example.myapplication.Model.Devices
 import com.example.myapplication.R
+import com.github.mikephil.charting.charts.LineChart
+import com.github.mikephil.charting.components.AxisBase
+import com.github.mikephil.charting.components.XAxis
+import com.github.mikephil.charting.data.Entry
+import com.github.mikephil.charting.data.LineData
+import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
+import com.github.mikephil.charting.utils.ColorTemplate
 import com.google.android.material.button.MaterialButton
-import com.google.android.material.textfield.TextInputEditText
 import kotlinx.android.synthetic.main.dev_button_for_info.view.*
+import kotlinx.android.synthetic.main.fragment_device_info.*
 import kotlinx.android.synthetic.main.fragment_device_info.view.*
 import kotlinx.android.synthetic.main.icon_dialog_box.*
 import kotlinx.android.synthetic.main.name_dialog_box.*
 import kotlinx.android.synthetic.main.name_dialog_box.save_change
+import java.security.KeyStore
 
 class DeviceInfoFragment(Id: Int) : Fragment() {
     val position = Id
@@ -99,6 +100,40 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
             fragmentTransaction.addToBackStack(null)
             fragmentTransaction.commit()
         }
+        val line_chart : LineChart = view.dev_chart
+        val linelist : ArrayList<Entry> = ArrayList()
+        linelist.add(Entry(0f,40f))
+        linelist.add(Entry(1f,67f))
+        linelist.add(Entry(1f,0f))
+        linelist.add(Entry(2f,0f))
+        linelist.add(Entry(2f,41f))
+        linelist.add(Entry(3f,45f))
+        linelist.add(Entry(3f,0f))
+        linelist.add(Entry(4f,0f))
+
+        val lineDataSet = LineDataSet(linelist, "Watts")
+        val lineData = LineData(lineDataSet)
+        line_chart.data = lineData
+        line_chart.legend.isEnabled = false
+        line_chart.axisRight.isEnabled = false
+        lineDataSet.setColors(Color.GRAY)
+        lineDataSet.valueTextColor = Color.BLUE
+        lineDataSet.valueTextSize = 10f
+
+        val xAxis = line_chart.xAxis
+        xAxis.position = XAxis.XAxisPosition.BOTTOM
+        xAxis.labelCount = 5
+        xAxis.granularity = 1f
+        xAxis.isGranularityEnabled = true
+
+        val xValsDateLabel = ArrayList<String>()
+        xValsDateLabel.add("00:00")
+        xValsDateLabel.add("01:40")
+        xValsDateLabel.add("19:43")
+        xValsDateLabel.add("20:50")
+        xValsDateLabel.add("24:00")
+
+        xAxis.valueFormatter = (MyValueFormatter(xValsDateLabel))
         return view
     }
 
@@ -168,4 +203,20 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
         }
         dialog.show()
     }
+
+    class MyValueFormatter(private val xValsDateLabel: ArrayList<String>) : ValueFormatter(){
+
+        override fun getFormattedValue(value: Float): String {
+            return value.toString()
+        }
+
+        override fun getAxisLabel(value: Float, axis: AxisBase?): String {
+            if(value.toInt() >= 0 && value.toInt() <= xValsDateLabel.size - 1 ){
+                return xValsDateLabel[value.toInt()]
+            } else {
+                return ("").toString()
+            }
+        }
+    }
+
 }
