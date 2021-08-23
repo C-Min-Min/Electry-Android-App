@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,11 +29,15 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.google.android.material.button.MaterialButton
 import kotlinx.android.synthetic.main.dev_button_for_info.view.*
+import kotlinx.android.synthetic.main.fragment_device_info.*
 import kotlinx.android.synthetic.main.fragment_device_info.view.*
 import kotlinx.android.synthetic.main.icon_dialog_box.*
 import kotlinx.android.synthetic.main.name_dialog_box.*
 import kotlinx.android.synthetic.main.name_dialog_box.save_change
 import kotlinx.coroutines.tasks.await
+import com.shrikanthravi.collapsiblecalendarview.data.Day
+import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+
 
 class DeviceInfoFragment(Id: Int) : Fragment() {
     val position = Id
@@ -107,10 +112,19 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
         val MeasureView = ViewModelProvider(this).get(MeasurementsViewModel::class.java)
         var date: String
         var entries: Float = 0F
+        var selectedDay: Day = Day(0,0,0)
+        var dayString : String
+
         MeasureView.getMeasurements(position)
         MeasureView.ResponseList.observe(viewLifecycleOwner, {
             searched_measurements = Measurements.createList(it)
             if(searched_measurements.isNotEmpty()){
+                val last_date = searched_measurements[searched_measurements.size - 1].timestamp.toString().split(" ")[0]
+                selectedDay = Day(last_date.split("-")[0].toInt() ,last_date.split("-")[1].toInt() - 1, last_date.split("-")[2].toInt() )
+                Log.i(
+                    javaClass.name, "Selected Day: "
+                            + selectedDay.year + "/" + (selectedDay.month + 1) + "/" + selectedDay.day
+                )
                 if (searched_measurements[0].timestamp.toString()
                         .split(" ")[1].split(".")[0] != "00:00:00"
                 ) {
@@ -123,29 +137,111 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
                 }
                 for (measure in 0 until searched_measurements.size) {
                     date = searched_measurements[measure].timestamp.toString().split(" ")[0]
+                    if (date == searched_measurements[searched_measurements.size - 1].timestamp.toString().split(" ")[0]) {
+                        xValsDateLabel.add(
+                            searched_measurements[measure].timestamp.toString()
+                                .split(" ")[1].split(".")[0]
+                        )
 
-                    xValsDateLabel.add(
-                        searched_measurements[measure].timestamp.toString()
-                            .split(" ")[1].split(".")[0]
-                    )
+                        linelist.add(Entry(entries, searched_measurements[measure].power.toFloat()))
 
-                    linelist.add(Entry(entries, searched_measurements[measure].power.toFloat()))
-
-                    if (searched_measurements[measure].state == 0) {
-                        linelist.add(Entry(entries, 0f))
-                    }
-                    entries++
-                    if (measure + 1 != searched_measurements.size) {
-                        if (searched_measurements[measure + 1].state == 1) {
+                        if (searched_measurements[measure].state == 0) {
                             linelist.add(Entry(entries, 0f))
                         }
+                        entries++
+                        if (measure + 1 != searched_measurements.size) {
+                            if (searched_measurements[measure + 1].state == 1) {
+                                linelist.add(Entry(entries, 0f))
+                            }
+                        }
                     }
-
                 }
                 linelist.add(Entry(entries, 0f))
                 xValsDateLabel.add("24:00:00")
                 showChart(linelist, xValsDateLabel, line_chart)
             }
+
+        })
+
+        val collapsibleCalendar: CollapsibleCalendar = view.calendar
+        collapsibleCalendar.selectedDay = selectedDay
+
+        collapsibleCalendar.setCalendarListener(object : CollapsibleCalendar.CalendarListener {
+            override fun onDaySelect() {
+                val day: Day? = collapsibleCalendar.selectedDay
+                if (selectedDay != day) {
+                    if (day != null) {
+                        selectedDay = day
+                        Log.i(
+                            javaClass.name, "Selected Day: "
+                                    + day.year + "/" + (day.month + 1) + "/" + day.day
+                        )
+                        if(day.month + 1 >= 10){
+                            dayString = day.year.toString() + "-" + (day.month + 1).toString() + "-" + day.day.toString()
+                        }else {
+                            dayString = day.year.toString() + "-0" + (day.month + 1).toString() + "-" + day.day.toString()
+                        }
+                        xValsDateLabel.clear()
+                        linelist.clear()
+                        MeasureView.ResponseList.observe(viewLifecycleOwner, {
+                            searched_measurements = Measurements.createList(it)
+                            if(searched_measurements.isNotEmpty()){
+                                val last_date = searched_measurements[searched_measurements.size - 1].timestamp.toString().split(" ")[0]
+                                selectedDay = Day(last_date.split("-")[0].toInt() ,last_date.split("-")[1].toInt() - 1, last_date.split("-")[2].toInt() )
+                                Log.i(
+                                    javaClass.name, "Selected Day: "
+                                            + selectedDay.year + "/" + (selectedDay.month + 1) + "/" + selectedDay.day
+                                )
+                                if (searched_measurements[0].timestamp.toString()
+                                        .split(" ")[1].split(".")[0] != "00:00:00"
+                                ) {
+                                    xValsDateLabel.add("00:00:00")
+
+                                    linelist.add(Entry(entries, 0f))
+                                    entries++
+                                    linelist.add(Entry(entries, 0f))
+
+                                }
+                                for (measure in 0 until searched_measurements.size) {
+                                    date = searched_measurements[measure].timestamp.toString().split(" ")[0]
+                                    if (date == dayString) {
+                                        Log.d("Passed", "Passed")
+                                        xValsDateLabel.add(
+                                            searched_measurements[measure].timestamp.toString()
+                                                .split(" ")[1].split(".")[0]
+                                        )
+
+                                        linelist.add(Entry(entries, searched_measurements[measure].power.toFloat()))
+
+                                        if (searched_measurements[measure].state == 0) {
+                                            linelist.add(Entry(entries, 0f))
+                                        }
+                                        entries++
+                                        if (measure + 1 != searched_measurements.size) {
+                                            if (searched_measurements[measure + 1].state == 1) {
+                                                linelist.add(Entry(entries, 0f))
+                                            }
+                                        }
+                                    }
+                                }
+                                linelist.add(Entry(entries, 0f))
+                                xValsDateLabel.add("24:00:00")
+                                showChart(linelist, xValsDateLabel, line_chart)
+                            }
+
+                        })
+                    }
+                }
+            }
+
+            override fun onItemClick(v: View) {}
+            override fun onClickListener() {}
+
+            override fun onDataUpdate() {}
+            override fun onDayChanged() {}
+
+            override fun onMonthChange() {}
+            override fun onWeekChange(position: Int) {}
         })
 
         return view
@@ -241,8 +337,9 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
         line_chart.axisRight.isEnabled = false
         lineDataSet.setColors(Color.GRAY)
         lineDataSet.valueTextColor = Color.BLUE
-        lineDataSet.valueTextSize = 10f
-
+        lineDataSet.valueTextSize = 15f
+        lineDataSet.lineWidth = 2f
+        lineDataSet.color
         val xAxis = line_chart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.labelCount = 5

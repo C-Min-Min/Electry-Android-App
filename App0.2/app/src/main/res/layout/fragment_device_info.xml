@@ -37,6 +37,11 @@
             android:textSize="35dp"
             android:textStyle="bold" />
 
+        <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/calendar"/>
+
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"
             android:layout_height="300dp"
