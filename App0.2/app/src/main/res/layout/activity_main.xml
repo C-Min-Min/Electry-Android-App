@@ -20,8 +20,8 @@
         android:layout_alignParentBottom="true"
         android:background="@drawable/top_rounded_corners"
         app:labelVisibilityMode="labeled"
-        app:itemIconTint="#959595"
-        app:itemTextColor="#959595"
+        app:itemIconTint="@color/nav_color"
+        app:itemTextColor="@color/nav_color"
         app:menu="@menu/nav_menu"/>
 
 </RelativeLayout>

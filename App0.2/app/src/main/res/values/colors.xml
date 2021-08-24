@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="main_text">#3c3b3d</color>
-    <color name="nav_bar">#f7f7f7</color>
+    <color name="nav_bar">#EDEDED</color>
     <color name="main_clr">#3c3b3d</color>
     <color name="btn_back">#f0f0f0</color>
     <color name="text_sec">#5F5E60</color>
@@ -9,6 +9,7 @@
     <color name="back_color">#ffffff</color>
     <color name="icon_color">#000000</color>
     <color name="dialog_back">#ffffff</color>
+    <color name="nav_color">#5A5A5A</color>
     <color name="yellow">#EFE358</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
