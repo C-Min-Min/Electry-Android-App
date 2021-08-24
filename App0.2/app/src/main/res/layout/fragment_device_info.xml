@@ -40,7 +40,14 @@
         <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
             android:layout_height="wrap_content"
             android:layout_width="match_parent"
-            android:id="@+id/calendar"/>
+            android:id="@+id/calendar"
+            app:textColor="@color/main_text"
+            app:selectedItem_textColor="@color/text_sec"
+            app:todayItem_textColor="@color/main_text"
+            app:selectedItem_background="@drawable/circle_background"
+            android:layout_marginHorizontal="25dp"
+            android:background="@drawable/calendar_back"
+            app:primaryColor="#00000000"/>
 
         <com.github.mikephil.charting.charts.LineChart
             android:layout_width="match_parent"

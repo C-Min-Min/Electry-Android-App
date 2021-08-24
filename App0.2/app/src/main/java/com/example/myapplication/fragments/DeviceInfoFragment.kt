@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.*
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
@@ -158,7 +159,7 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
                 }
                 linelist.add(Entry(entries, 0f))
                 xValsDateLabel.add("24:00:00")
-                showChart(linelist, xValsDateLabel, line_chart)
+                showChart(view.context, linelist, xValsDateLabel, line_chart)
             }
 
         })
@@ -226,7 +227,7 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
                                 }
                                 linelist.add(Entry(entries, 0f))
                                 xValsDateLabel.add("24:00:00")
-                                showChart(linelist, xValsDateLabel, line_chart)
+                                showChart(view.context, linelist, xValsDateLabel, line_chart)
                             }
 
                         })
@@ -329,17 +330,19 @@ class DeviceInfoFragment(Id: Int) : Fragment() {
         }
     }
 
-    fun showChart(linelist: ArrayList<Entry>, xValsDateLabel: ArrayList<String>, line_chart: LineChart){
+    fun showChart(context: Context, linelist: ArrayList<Entry>, xValsDateLabel: ArrayList<String>, line_chart: LineChart){
         val lineDataSet = LineDataSet(linelist, "Watts")
         val lineData = LineData(lineDataSet)
         line_chart.data = lineData
         line_chart.legend.isEnabled = false
         line_chart.axisRight.isEnabled = false
+        lineDataSet.setDrawFilled(true)
         lineDataSet.setColors(Color.GRAY)
-        lineDataSet.valueTextColor = Color.BLUE
         lineDataSet.valueTextSize = 15f
         lineDataSet.lineWidth = 2f
-        lineDataSet.color
+        lineDataSet.color = ContextCompat.getColor(context, R.color.yellow)
+        lineDataSet.valueTextColor = ContextCompat.getColor(context, R.color.main_text)
+        lineDataSet.fillDrawable = ContextCompat.getDrawable(context, R.drawable.gradient )
         val xAxis = line_chart.xAxis
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.labelCount = 5
