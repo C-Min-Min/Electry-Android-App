@@ -1,8 +1,14 @@
 package com.example.myapplication
 
 import android.app.ActionBar
+import android.app.Activity
+import android.content.Context
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
+import android.view.WindowManager
+import androidx.core.content.ContextCompat
 import com.example.myapplication.fragments.*
 import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_main.*

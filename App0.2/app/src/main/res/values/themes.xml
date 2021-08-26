@@ -9,5 +9,7 @@
 
         <!-- Customize your theme here. -->
         <item name="fontFamily">@font/productsans_medium</item>
+        <item name="android:statusBarColor">@color/back_color</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
