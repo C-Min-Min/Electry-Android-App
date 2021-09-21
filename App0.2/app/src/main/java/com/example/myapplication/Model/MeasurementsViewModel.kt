@@ -12,7 +12,7 @@ class MeasurementsViewModel: ViewModel() {
 
     fun getMeasurements(Id: Int) {
         viewModelScope.launch {
-            ResponseList.value = RetrofitClient.retrofit.getMeasurements(Id)
+            ResponseList.value = RetrofitClient.retrofit.getMeasurements("measurements",Id)
         }
     }
 }

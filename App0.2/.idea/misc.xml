@@ -36,7 +36,10 @@
         <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/activity_main.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/db_ip_dialog_box.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/desc_dialog_box.xml" value="0.20520833333333333" />
+<<<<<<< HEAD
         <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/dev_button_for_info.xml" value="0.20520833333333333" />
+=======
+>>>>>>> parent of 6a64974 (Revert "DB API reorder")
         <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_device_info.xml" value="0.28615384615384615" />
         <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_home.xml" value="0.1" />
         <entry key="..\:/Users/marog/Documents/GitHub/Electry-Android-App/App0.2/app/src/main/res/layout/fragment_settings.xml" value="0.2" />
