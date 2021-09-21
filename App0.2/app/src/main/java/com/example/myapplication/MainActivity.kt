@@ -23,20 +23,11 @@ import kotlinx.android.synthetic.main.name_dialog_box.*
 
 class MainActivity : AppCompatActivity() {
 
-    public val preferences : SharedPreferences = getSharedPreferences( "sharedPrefs", Context.MODE_PRIVATE )
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         val actionBar: androidx.appcompat.app.ActionBar? = supportActionBar
         actionBar?.hide()
-
-
-        val savedIP : String = loadData().toString()
-        if (savedIP == "null"){
-            showDialog(this, savedIP)
-        }
-
 
         val homeFragment = HomeFragment()
         val devicesFragment = DevicesFragment()
@@ -66,41 +57,6 @@ class MainActivity : AppCompatActivity() {
             commit()
         }
 
-    private fun saveData(inserted_text: String) {
 
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.apply{
-            putString("STRING_KEY", inserted_text)
-        }.apply()
-
-        Toast.makeText(this, "DATA SAVED", Toast.LENGTH_SHORT).show()
-
-    }
-
-    private fun loadData() : String?{
-        val sharedPreferences = getSharedPreferences("sharedPrefs", Context.MODE_PRIVATE)
-        val savedIP = sharedPreferences.getString("STRING_KEY", null)
-
-        return savedIP
-    }
-
-    private fun showDialog(context: Context, original: String) {
-        val dialog = Dialog(context)
-        dialog.setContentView(R.layout.db_ip_dialog_box)
-        val save: MaterialButton = dialog.save_change
-        dialog.window?.setLayout(
-            ViewGroup.LayoutParams.MATCH_PARENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        dialog.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
-        dialog.set_change.setText(original)
-        save.setOnClickListener {
-            val set_change = dialog.set_change.text.toString()
-            saveData(set_change)
-            dialog.dismiss()
-        }
-        dialog.show()
-    }
 
 }
