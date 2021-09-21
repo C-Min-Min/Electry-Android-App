@@ -1,37 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".fragments.SettingsFragment">
 
-    <TableLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/back_color">
+        android:layout_height="match_parent">
 
         <TextView
-            android:layout_marginStart="30dp"
-            android:layout_marginTop="20dp"
-            android:text="Settings"
-            android:textColor="@color/main_text"
-            android:textSize="45dp"
-            android:textStyle="bold" />
-
-        <com.google.android.material.button.MaterialButton
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="20dp"
-            android:backgroundTint="@color/btn_back"
-            android:text="change db ip address"
-            android:textColor="@color/main_text"
-            app:cornerRadius="50dp"
-            android:paddingVertical="12dp"
-            android:textSize="15dp"
-            android:id="@+id/edit_db_ip"/>
+            android:layout_centerInParent="true"
+            android:text="Settings" />
 
-    </TableLayout>
+    </RelativeLayout>
 
-</androidx.core.widget.NestedScrollView>
+</FrameLayout>
