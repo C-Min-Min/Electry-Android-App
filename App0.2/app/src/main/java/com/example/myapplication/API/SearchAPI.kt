@@ -6,22 +6,19 @@ import retrofit2.http.*
 
 
 interface SearchAPI {
-    @GET("devices")
-    suspend fun getDevice():List<Devices>
-
     @FormUrlEncoded
-    @POST("search")
-    suspend fun searchDevice(@Field("search") Id: Int):List<Devices>
-
+    @POST("devices")
+    suspend fun getDevice(@Field("sub_api") Sub_Api : String):List<Devices>
     @FormUrlEncoded
-    @POST("edit")
-    suspend fun updateDevice(@Field("id") Id: Int, @Field("change_set") Change: String, @Field("dev_x") Dev: String)
-
+    @POST("devices")
+    suspend fun searchDevice(@Field("sub_api") Sub_Api : String, @Field("search") Id: Int):List<Devices>
     @FormUrlEncoded
-    @POST("delete")
-    suspend fun deleteDevice(@Field("id") Id: Int)
-
+    @POST("devices")
+    suspend fun updateDevice(@Field("sub_api") Sub_Api : String, @Field("id") Id: Int, @Field("change_set") Change: String, @Field("dev_x") Dev: String)
     @FormUrlEncoded
-    @POST("measurements")
-    suspend fun getMeasurements(@Field("id") Id: Int):List<Measurements>
+    @POST("devices")
+    suspend fun deleteDevice(@Field("sub_api") Sub_Api : String, @Field("id") Id: Int)
+    @FormUrlEncoded
+    @POST("devices")
+    suspend fun getMeasurements(@Field("sub_api") Sub_Api : String, @Field("id") Id: Int):List<Measurements>
 }

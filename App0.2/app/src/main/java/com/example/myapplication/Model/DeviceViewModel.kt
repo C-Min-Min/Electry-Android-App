@@ -13,25 +13,25 @@ class DeviceViewModel : ViewModel() {
 
     fun getDevice() {
         viewModelScope.launch {
-            ResponseList.value = RetrofitClient.retrofit.getDevice()
+            ResponseList.value = RetrofitClient.retrofit.getDevice("all")
         }
     }
 
     fun searchDevice(Id: Int) {
         viewModelScope.launch {
-            ResponseList.value = RetrofitClient.retrofit.searchDevice(Id)
+            ResponseList.value = RetrofitClient.retrofit.searchDevice("search",Id)
         }
     }
 
     fun updateDevice(Id: Int, Change: String, Dev: String) {
         viewModelScope.launch {
-            RetrofitClient.retrofit.updateDevice(Id, Change, Dev)
+            RetrofitClient.retrofit.updateDevice("edit",Id, Change, Dev)
         }
     }
 
     fun deleteDevice(Id: Int){
         viewModelScope.launch {
-            RetrofitClient.retrofit.deleteDevice(Id)
+            RetrofitClient.retrofit.deleteDevice("delete",Id)
         }
     }
 }
