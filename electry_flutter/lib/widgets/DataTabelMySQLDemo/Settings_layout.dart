@@ -57,12 +57,6 @@ class Settings_layout_State extends State<Settings_layout>{
     }
   }
 
-  save() async {
-    SharedPreferences sPref = await SharedPreferences.getInstance();
-    sPref.setString("db_ip", db_ip_controller.text);
-    print("data stored!");
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,34 +78,6 @@ class Settings_layout_State extends State<Settings_layout>{
               padding: const EdgeInsets.only(top: 35.0, left: 20),
             ),
           ),
-          new Container(
-            alignment: Alignment.topLeft,
-            child: Padding(
-              child: 
-                TextButton(
-                  onPressed: () => showDialog<String>(
-                    context: context,
-                    builder: (BuildContext context) => AlertDialog(
-                      title: const Text("DB IP address"),
-                      content: TextField(
-                        controller: db_ip_controller,
-                        decoration: const InputDecoration(
-                          border: OutlineInputBorder(),
-                        ),
-                      ),
-                      actions: <Widget>[
-                        TextButton(
-                          onPressed: () => Navigator.pop(context, 'Save'),
-                          child: const Text('Save'),
-                        ),
-                      ],
-                    )
-                  ),
-                  child: const Text('DB IP address'),
-                ),
-              padding: const EdgeInsets.only(top: 15.0, left: 25.0, bottom: 10),
-            ),
-          )
         ],
         
       ),

@@ -126,16 +126,15 @@ class Home_layout_State extends State<Home_layout>{
           colors: [
             Colors.white,
             Colors.yellow[100],
-            Colors.yellow[300],
-            
-            
+            Colors.yellow[200],
+            Colors.yellow[300]
           ]
         ),
         borderRadius: BorderRadius.all(Radius.circular(20))
       );
     }else{
       return BoxDecoration(
-        color: Colors.grey,
+        color: Colors.grey[300],
         borderRadius: BorderRadius.all(Radius.circular(20))
       );
     }
@@ -146,6 +145,7 @@ class Home_layout_State extends State<Home_layout>{
     return GestureDetector(
             onTap: (){
               print("${item.dev_id}");
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>Device_info_layout(item.dev_id)));
             },
             child: new Container(
             child: new Padding(
@@ -287,7 +287,13 @@ class Home_layout_State extends State<Home_layout>{
         
       
       ),
-      
+      floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                _getDevices();
+              },
+              child: const Icon(Icons.refresh),
+              backgroundColor: Colors.blueAccent,
+              tooltip: "Refresh",)
       );
         
   }

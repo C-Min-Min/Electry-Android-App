@@ -101,16 +101,15 @@ class Device_layout_State extends State<Device_layout>{
           colors: [
             Colors.white,
             Colors.yellow[100],
-            Colors.yellow[300],
-            
-            
+            Colors.yellow[200],
+            Colors.yellow[300]
           ]
         ),
         borderRadius: BorderRadius.all(Radius.circular(20))
       );
     }else{
       return BoxDecoration(
-        color: Colors.grey[350],
+        color: Colors.grey[300],
         borderRadius: BorderRadius.all(Radius.circular(20))
       );
     }
@@ -255,7 +254,13 @@ class Device_layout_State extends State<Device_layout>{
           ],
         ),
       ),
-      
+      floatingActionButton: FloatingActionButton(
+              onPressed: () {
+                _getDevices();
+              },
+              child: const Icon(Icons.refresh),
+              backgroundColor: Colors.blueAccent,
+              tooltip: "Refresh",)
       );
   }
 }

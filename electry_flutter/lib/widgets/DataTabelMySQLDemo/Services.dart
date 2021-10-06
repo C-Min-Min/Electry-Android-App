@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'Device.dart';
 
 class Services {
-  static const ROOT = 'http://s:3000/devices';
+  static const ROOT = 'http://10.0.2.2:3000/devices';
   static const _GET_ALL_ACTION = 'all';
   static const _SEARCH_ACTION = 'search';
   static const _EDIT_ACTION = 'edit';
@@ -64,6 +64,25 @@ class Services {
     }catch (e){
       print(e);
       return [];
+    }
+  }
+
+  static updateDevice(int Id, String change, String dev) async{
+    try{
+      var map = Map<String, dynamic>();
+      map['sub_api'] = _EDIT_ACTION;
+      map['id'] = Id.toString();
+      map['change_set'] = change;
+      map['dev_x'] = dev;
+      final response = await http.post(ROOT, body: map);
+      print('Edit Device Response: ${response.body}');
+      if(200 == response.statusCode){
+        print("passing");
+      }else{
+        print("not 200: ${response.statusCode}");
+      }
+    }catch (e){
+      print(e);
     }
   }
 
