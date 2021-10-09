@@ -59,6 +59,9 @@ app.post("/devices",(req, res, next)=>{
             var query = "UPDATE devices SET DEV_NAME = '"+dev_x+"' WHERE DEV_ID = "+id+""
         }else if(change_set == "dev_icon"){
             var query = "UPDATE devices SET IMAGE_PATH = '"+dev_x+"' WHERE DEV_ID = "+id+""
+        }else if(change_set == "dev_fav") {
+            dev_x = Number(dev_x)
+            var query = "UPDATE devices SET DEV_FAV = "+dev_x+" WHERE DEV_ID = "+id+""
         }
 
         con.query(query,function(error, result, fields){
@@ -66,7 +69,8 @@ app.post("/devices",(req, res, next)=>{
                 console.log('[MySQL]ERROR',err);
             });
         });
-        console.log("update on devices made with id = "+id+" for "+change_set+"")
+        console.log("update on devices made with id = "+id+" for "+change_set+" with "+dev_x+"")
+        console.log(query);
     }else if(sub_api == 'delete'){
         var id = Number(post_data.id)
 
