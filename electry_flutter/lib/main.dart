@@ -1,5 +1,7 @@
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/app.dart';
+import 'package:electry_flutter/widgets/DataTabelMySQLDemo/nav_layout.dart';
 import 'package:flutter/material.dart';
+import 'package:electry_flutter/theme_provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -10,9 +12,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      theme: new ThemeData(
-      ),
-      home: new App(),
+      themeMode: ThemeMode.system,
+      theme: MyTheme.lightTheme,
+      darkTheme: MyTheme.darkTheme,
+      home: new NavLayout(),
     );
   }
 }

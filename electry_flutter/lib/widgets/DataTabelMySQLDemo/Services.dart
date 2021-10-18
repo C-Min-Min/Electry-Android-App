@@ -4,7 +4,7 @@ import 'package:http/http.dart' as http;
 import 'Device.dart';
 
 class Services {
-  static const ROOT = 'http://10.0.2.2:3000/devices';
+  static const ROOT = 'http://164.138.220.181:3000/devices';
   static const _GET_ALL_ACTION = 'all';
   static const _SEARCH_ACTION = 'search';
   static const _EDIT_ACTION = 'edit';

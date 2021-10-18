@@ -1,8 +1,7 @@
-require('events').EventEmitter.defaultMaxListeners = Infinity; 
-
 var express = require('express')
 var mysql = require('mysql')
 var bodyParser = require('body-parser')
+var cors = require('cors')
 
 //connect MySQL
 var con = mysql.createConnection({
@@ -18,6 +17,7 @@ var publicDir=(__dirname+'/public/');
 app.use(express.static(publicDir));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended:true}));
+app.use(cors);
 
 app.post("/devices",(req, res, next)=>{
     var post_data = req.body
@@ -100,6 +100,9 @@ app.post("/devices",(req, res, next)=>{
     }
 });
 
+app.get("/cors", (req, res, next)=>{
+    res.end(JSON.stringify("Hello asshole"));
+});
 //Start Server
 app.listen(3000, ()=>{
     console.log('Electry Search API running on port 3000');
