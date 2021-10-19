@@ -1,5 +1,7 @@
+import 'package:electry_flutter/widgets/DataTabelMySQLDemo/custom_app_bar.dart';
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/custom_tab_bar.dart';
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/layouts.dart';
+import 'package:electry_flutter/widgets/DataTabelMySQLDemo/responsive.dart';
 import 'package:flutter/material.dart';
 
 class NavLayout extends StatefulWidget {
@@ -25,22 +27,32 @@ class _NavLayoutState extends State<NavLayout> {
   int _selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
-
+    var screenWidth = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length:_icons.length,
       child: Scaffold(
+        appBar: Responsive.isDesktop(context) 
+        ? PreferredSize(
+            preferredSize: Size(screenWidth, 100),
+            child: CustomAppBar(
+              icons: _icons,
+              selectedIndex: _selectedIndex,
+                onTap: (index) => setState(() => _selectedIndex = index),
+            ),
+          ) 
+          : null,
         body: TabBarView(
           physics: NeverScrollableScrollPhysics(),
           children: _screens,
         ),
-        bottomNavigationBar: Padding(
+        bottomNavigationBar: !Responsive.isDesktop(context) ? Padding(
           padding: const EdgeInsets.only(bottom: 12),
           child: CustomTabBar (
             icons: _icons,
             selectedIndex: _selectedIndex,
             onTap: (index) => setState(() => _selectedIndex = index),
           ),
-        ),
+        ) : const SizedBox.shrink()
       ),  
     );
   }

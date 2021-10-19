@@ -125,13 +125,14 @@ List<Color> color_palette;
                     
                   ],
                 ),
-                decoration: _color(item.dev_state, true)
-                
+                decoration: _color(item.dev_state, true),
+                height: double.infinity,
+                width: double.infinity,
               ),
               padding: const EdgeInsets.only(left: 10, right: 10),              
             ),
-            width: 160,
-          height: 160
+            width: 130,
+          height: 130
           ),
           
           );

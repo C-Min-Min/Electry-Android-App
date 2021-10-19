@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/Measurement.dart';
+import 'package:electry_flutter/widgets/DataTabelMySQLDemo/responsive.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -541,9 +542,9 @@ Icon _icon(Device item) {
       body: RefreshIndicator(
         onRefresh: refresh,
         child: GestureDetector(
-          onHorizontalDragStart: (DragStartDetails details) {
+          onHorizontalDragStart: !Responsive.isDesktop(context) ? (DragStartDetails details) {
             Navigator.pop(context);
-          },
+          }: null,
           child: SingleChildScrollView(
             child: Column(
               children: [

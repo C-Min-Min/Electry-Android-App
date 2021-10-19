@@ -1,5 +1,6 @@
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/Device_build.dart';
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/Device_info_layout.dart';
+import 'package:electry_flutter/widgets/DataTabelMySQLDemo/responsive.dart';
 import 'package:flutter/material.dart';
 import 'Device.dart';
 import 'Home_layout.dart';
@@ -71,11 +72,12 @@ class Device_layout_State extends State<Device_layout>{
     return null;
   }
 
-  int device_per_row = 1;
+  int device_per_row = 0;
   @override
   Widget build(BuildContext context) {
-    for(int i = 0; i < 5;i++){
-      if(MediaQuery.of(context).size.width > ((device_per_row + 1) * 160) + (20 * (device_per_row + 1))){
+    var screenWidth = MediaQuery.of(context).size.width;
+    for(int i = 0; i < 3;i++){
+      if(screenWidth > ((device_per_row+1) * 130) + (20 * (device_per_row+1))){
         device_per_row++;
       }
     }
@@ -98,21 +100,24 @@ class Device_layout_State extends State<Device_layout>{
                   padding: const EdgeInsets.only(top: 35.0, left: 20, bottom: 20),
                 ),
               ),
-              GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: device_per_row, 
-                crossAxisSpacing: 5.0, 
-                mainAxisSpacing: 25.0,
-                childAspectRatio: (1/.9)),
-                itemCount: _devices.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  Device item;
+              Container(
+                child: GridView.builder(
+                physics: NeverScrollableScrollPhysics(),
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: Responsive.isMobile(context) ? 2 : Responsive.isTablet(context) ? 4 : 6, 
+                  crossAxisSpacing: 5.0, 
+                  mainAxisSpacing: 25.0,
+                  childAspectRatio: (1/.9)),
+                  itemCount: _devices.length,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    Device item;
                     item = _devices[index];
-                  
-                  return GridTile(child: Device_built(item: item));
-                },
+      
+                    return GridTile(child: Device_built(item: item,));
+                  },
+            ),
+            width: 1200,
               ),
             ],
           ),

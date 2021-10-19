@@ -1,5 +1,6 @@
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/Device_info_layout.dart';
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/Devices_layout.dart';
+import 'package:electry_flutter/widgets/DataTabelMySQLDemo/responsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -73,7 +74,11 @@ class Home_layout_State extends State<Home_layout>{
     Services.getDevices().then((devices){
       setState(() {
         _devices = devices;
-
+        for(int i = 0; i < _devices.length; i++){
+          if(devices[i].dev_fav == 1){
+            _fav_devices.add(devices[i]);
+          }
+        }
       });
       print("Length ${devices.length}");
       for(int i = 0; i < _devices.length; i++){
@@ -81,20 +86,8 @@ class Home_layout_State extends State<Home_layout>{
           _on_devices++;
         }
       }
-    });
-    Services.getDevices().then((devices){
-      setState(() {
-      for(int i = 0; i < _devices.length; i++){
-        if(devices[i].dev_fav == 1){
-          _fav_devices.add(devices[i]);
-        }
-      }
-
-      });
       print("Length ${_fav_devices.length}");
-    }
-    );
-    
+    });
   }
 
   Future<Null> refresh() async {
@@ -102,21 +95,15 @@ class Home_layout_State extends State<Home_layout>{
     return null;
   }
 
-  int device_per_row = 0;
   @override
   Widget build(BuildContext context) {
     screenWidth = MediaQuery.of(context).size.width;
     screenHeight = MediaQuery.of(context).size.height;
     blockSizeHorizontal = (screenWidth / 100);
     blockSizeVertical = (screenHeight / 100);
-    for(int i = 0; i < 5;i++){
-      if(screenWidth > ((device_per_row+1) * 160) + (20 * (device_per_row+1))){
-        device_per_row++;
-      }
-    }
-    
+   
+    print(blockSizeHorizontal.toString() + " " + blockSizeVertical.toString());
     return Scaffold(
-    
       body: RefreshIndicator(
         onRefresh: refresh,
         child: SingleChildScrollView(
@@ -151,7 +138,7 @@ class Home_layout_State extends State<Home_layout>{
             GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: device_per_row, 
+                crossAxisCount: Responsive.isMobile(context) ? 2 : Responsive.isTablet(context) ? 4 : 6, 
                 crossAxisSpacing: 5.0, 
                 mainAxisSpacing: 25.0,
                 childAspectRatio: (1/.9)),
@@ -183,7 +170,7 @@ class Home_layout_State extends State<Home_layout>{
             GridView.builder(
               physics: NeverScrollableScrollPhysics(),
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: device_per_row, 
+                crossAxisCount: Responsive.isMobile(context) ? 2 : Responsive.isTablet(context) ? 4 : 6, 
                 crossAxisSpacing: 5.0, 
                 mainAxisSpacing: 25.0,
                 childAspectRatio: (1/.9)),
