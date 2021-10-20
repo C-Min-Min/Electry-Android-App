@@ -542,9 +542,12 @@ Icon _icon(Device item) {
       body: RefreshIndicator(
         onRefresh: refresh,
         child: GestureDetector(
-          onHorizontalDragStart: !Responsive.isDesktop(context) ? (DragStartDetails details) {
-            Navigator.pop(context);
+          onPanUpdate: !Responsive.isDesktop(context) ? (details) {
+            if (details.delta.dx > 0) {
+              Navigator.pop(context);
+            }
           }: null,
+          
           child: SingleChildScrollView(
             child: Column(
               children: [

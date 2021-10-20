@@ -97,17 +97,13 @@ class Home_layout_State extends State<Home_layout>{
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHeight = MediaQuery.of(context).size.height;
-    blockSizeHorizontal = (screenWidth / 100);
-    blockSizeVertical = (screenHeight / 100);
-   
-    print(blockSizeHorizontal.toString() + " " + blockSizeVertical.toString());
+    
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: refresh,
         child: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             new Container(
               alignment: Alignment.topLeft,
@@ -135,25 +131,31 @@ class Home_layout_State extends State<Home_layout>{
                 padding: const EdgeInsets.only(top: 15.0, left: 25.0, bottom: 10),
               ),
             ),
-            GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: Responsive.isMobile(context) ? 2 : Responsive.isTablet(context) ? 4 : 6, 
-                crossAxisSpacing: 5.0, 
-                mainAxisSpacing: 25.0,
-                childAspectRatio: (1/.9)),
-                itemCount: _on_devices,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  Device item;
-                  if(_devices[index].dev_state == 1){
-                    item = _devices[index];
-                  }
-                  
+            Container(
+              child: Padding(
+                padding: Responsive.isDesktop(context) ? const EdgeInsets.only(left: 20) : const EdgeInsets.all(0),
+                child: GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: Responsive.isMobile(context) ? 2 : 4, 
+                    crossAxisSpacing: 5.0, 
+                    mainAxisSpacing: 25.0,
+                    childAspectRatio: (1/.9)),
+                    itemCount: _on_devices,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      Device item;
+                      if(_devices[index].dev_state == 1){
+                        item = _devices[index];
+                      }
+                      
       
-                  return GridTile(child: Device_built(item: item));
-                },
+                      return GridTile(child: Device_built(item: item));
+                    },
+                  ),
               ),
+              width: Responsive.isMobile(context) ? double.infinity : 800,
+            ),
             new Container(
               alignment: Alignment.topLeft,
               child: Padding(
@@ -167,21 +169,27 @@ class Home_layout_State extends State<Home_layout>{
                 padding: const EdgeInsets.only(top: 15.0, left: 25.0, bottom: 10),
               ),
             ),
-            GridView.builder(
-              physics: NeverScrollableScrollPhysics(),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: Responsive.isMobile(context) ? 2 : Responsive.isTablet(context) ? 4 : 6, 
-                crossAxisSpacing: 5.0, 
-                mainAxisSpacing: 25.0,
-                childAspectRatio: (1/.9)),
-                itemCount: _fav_devices.length,
-                shrinkWrap: true,
-                itemBuilder: (context, index) {
-                  Device item;
-                  item = _fav_devices[index];
+            Container(
+              child: Padding(
+                padding: Responsive.isDesktop(context) ? const EdgeInsets.only(left: 20) : const EdgeInsets.all(0),
+                child: GridView.builder(
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: Responsive.isMobile(context) ? 2 : 4, 
+                    crossAxisSpacing: 5.0, 
+                    mainAxisSpacing: 25.0,
+                    childAspectRatio: (1/.9)),
+                    itemCount: _fav_devices.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      Device item;
+                      item = _fav_devices[index];
       
-                  return GridTile(child: Device_built(item: item,));
-                },
+                      return GridTile(child: Device_built(item: item,));
+                    },
+                ),
+              ),
+              width: Responsive.isMobile(context) ? double.infinity : 800,
             ),
             Padding(
                 padding: const EdgeInsets.only(top: 15.0, left: 25.0, bottom: 10),

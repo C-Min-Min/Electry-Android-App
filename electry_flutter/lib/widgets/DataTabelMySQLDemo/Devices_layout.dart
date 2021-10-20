@@ -75,18 +75,14 @@ class Device_layout_State extends State<Device_layout>{
   int device_per_row = 0;
   @override
   Widget build(BuildContext context) {
-    var screenWidth = MediaQuery.of(context).size.width;
-    for(int i = 0; i < 3;i++){
-      if(screenWidth > ((device_per_row+1) * 130) + (20 * (device_per_row+1))){
-        device_per_row++;
-      }
-    }
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: refresh,
         child: SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              
               new Container(
                 alignment: Alignment.topLeft,
                 child: Padding(
@@ -101,23 +97,27 @@ class Device_layout_State extends State<Device_layout>{
                 ),
               ),
               Container(
-                child: GridView.builder(
-                physics: NeverScrollableScrollPhysics(),
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: Responsive.isMobile(context) ? 2 : Responsive.isTablet(context) ? 4 : 6, 
-                  crossAxisSpacing: 5.0, 
-                  mainAxisSpacing: 25.0,
-                  childAspectRatio: (1/.9)),
-                  itemCount: _devices.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    Device item;
-                    item = _devices[index];
+                child: Padding(
+                  padding: Responsive.isDesktop(context) ? const EdgeInsets.only(left: 20) : const EdgeInsets.all(0),
+                  child: GridView.builder(
+                    
+                  physics: NeverScrollableScrollPhysics(),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: Responsive.isMobile(context) ? 2 : Responsive.isTablet(context) ? 4 : 6, 
+                    crossAxisSpacing: 5.0, 
+                    mainAxisSpacing: 25.0,
+                    childAspectRatio: (1/.9)),
+                    itemCount: _devices.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      Device item;
+                      item = _devices[index];
       
-                    return GridTile(child: Device_built(item: item,));
-                  },
+                      return GridTile(child: Device_built(item: item,));
+                    },
             ),
-            width: 1200,
+                ),
+            width: Responsive.isMobile(context) ? double.infinity : Responsive.isTablet(context) ? 800 : 1200,
               ),
             ],
           ),
