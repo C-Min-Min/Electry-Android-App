@@ -30,29 +30,39 @@ class _NavLayoutState extends State<NavLayout> {
     var screenWidth = MediaQuery.of(context).size.width;
     return DefaultTabController(
       length:_icons.length,
-      child: Scaffold(
-        appBar: Responsive.isDesktop(context) 
-        ? PreferredSize(
-            preferredSize: Size(screenWidth, 100),
-            child: CustomAppBar(
-              icons: _icons,
-              selectedIndex: _selectedIndex,
-                onTap: (index) => setState(() => _selectedIndex = index),
+      child: Builder(
+        builder: (context) {
+          final TabController tabController = DefaultTabController.of(context);
+          tabController.addListener(() {
+            if(!tabController.indexIsChanging){
+              setState(() => _selectedIndex = tabController.index);
+            }
+          });
+          return Scaffold(
+            appBar: Responsive.isDesktop(context) 
+            ? PreferredSize(
+                preferredSize: Size(screenWidth, 100),
+                child: CustomAppBar(
+                  icons: _icons,
+                  selectedIndex: _selectedIndex,
+                    onTap: (index) => setState(() => _selectedIndex = index),
+                ),
+              ) 
+              : null,
+            body: TabBarView(
+              
+              children: _screens,
             ),
-          ) 
-          : null,
-        body: TabBarView(
-          physics: NeverScrollableScrollPhysics(),
-          children: _screens,
-        ),
-        bottomNavigationBar: !Responsive.isDesktop(context) ? Padding(
-          padding: const EdgeInsets.only(bottom: 12),
-          child: CustomTabBar (
-            icons: _icons,
-            selectedIndex: _selectedIndex,
-            onTap: (index) => setState(() => _selectedIndex = index),
-          ),
-        ) : const SizedBox.shrink()
+            bottomNavigationBar: !Responsive.isDesktop(context) ? Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: CustomTabBar (
+                icons: _icons,
+                selectedIndex: _selectedIndex,
+                onTap: (index) => setState(() => _selectedIndex = index),
+              ),
+            ) : const SizedBox.shrink()
+          );
+        }
       ),  
     );
   }
