@@ -1,5 +1,6 @@
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/Device_build.dart';
 import 'package:electry_flutter/widgets/DataTabelMySQLDemo/custom_tab_bar.dart';
+import 'package:electry_flutter/widgets/DataTabelMySQLDemo/responsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
@@ -48,7 +49,7 @@ class CustomAppBar extends StatelessWidget {
           ),
           Container(
             height: double.infinity,
-            width: 1000,
+            width: 800,
             child: CustomTabBar(
               icons: icons,
               selectedIndex: selectedIndex,
