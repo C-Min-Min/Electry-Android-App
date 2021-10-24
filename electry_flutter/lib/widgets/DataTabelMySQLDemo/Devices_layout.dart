@@ -79,6 +79,7 @@ class Device_layout_State extends State<Device_layout>{
       body: RefreshIndicator(
         onRefresh: refresh,
         child: SingleChildScrollView(
+          physics: AlwaysScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

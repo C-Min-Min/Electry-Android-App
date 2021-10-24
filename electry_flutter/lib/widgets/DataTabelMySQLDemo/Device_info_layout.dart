@@ -549,6 +549,7 @@ Icon _icon(Device item) {
           }: null,
           
           child: SingleChildScrollView(
+            physics: AlwaysScrollableScrollPhysics(),
             child: Column(
               children: [
                 new Container(
