@@ -39,7 +39,7 @@ class _NavLayoutState extends State<NavLayout> {
             }
           });
           return Scaffold(
-            appBar: Responsive.isDesktop(context) || Responsive.isTabletLandscape(context)
+            appBar: Responsive.isDesktop(context) || Responsive.isTabletLandscape(context) || Responsive .isMobileLandscape(context)
             ? PreferredSize(
                 preferredSize: Size(screenWidth, 100),
                 child: CustomAppBar(
@@ -53,7 +53,7 @@ class _NavLayoutState extends State<NavLayout> {
               physics: Responsive.isDesktop(context) ? NeverScrollableScrollPhysics() : null,
               children: _screens,
             ),
-            bottomNavigationBar: Responsive.isTabletPortrait(context) || Responsive.isMobile(context) ? Padding(
+            bottomNavigationBar: Responsive.isTabletPortrait(context) || Responsive.isMobilePortrait(context) ? Padding(
               padding: const EdgeInsets.only(bottom: 12),
               child: CustomTabBar (
                 icons: _icons,

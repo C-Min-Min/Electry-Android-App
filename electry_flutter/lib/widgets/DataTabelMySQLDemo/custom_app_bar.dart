@@ -49,7 +49,7 @@ class CustomAppBar extends StatelessWidget {
           ),
           Container(
             height: double.infinity,
-            width: 800,
+            width: Responsive.isDesktop(context) ? 1000 : Responsive.isTablet(context) ? 800 : 400,
             child: CustomTabBar(
               icons: icons,
               selectedIndex: selectedIndex,
