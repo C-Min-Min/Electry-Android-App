@@ -128,7 +128,7 @@ class Home_layout_State extends State<Home_layout>{
                       fontWeight: FontWeight.w700,
                       fontFamily: "Roboto"),
                   ),
-                padding: const EdgeInsets.only(top: 15.0, left: 25.0, bottom: 10),
+                padding: const EdgeInsets.only(top: 15.0, left: 25.0,),
               ),
             ),
             Container(
@@ -137,7 +137,7 @@ class Home_layout_State extends State<Home_layout>{
                 child: GridView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: Responsive.isMobile(context) ? 2 : 4, 
+                    crossAxisCount: Responsive.isMobilePortrait(context) ? 2 : 4, 
                     crossAxisSpacing: 5.0, 
                     mainAxisSpacing: 25.0,
                     childAspectRatio: (1/.9)),
@@ -175,7 +175,7 @@ class Home_layout_State extends State<Home_layout>{
                 child: GridView.builder(
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: Responsive.isMobile(context) ? 2 : 4, 
+                    crossAxisCount: Responsive.isMobilePortrait(context) ? 2 : 4, 
                     crossAxisSpacing: 5.0, 
                     mainAxisSpacing: 25.0,
                     childAspectRatio: (1/.9)),

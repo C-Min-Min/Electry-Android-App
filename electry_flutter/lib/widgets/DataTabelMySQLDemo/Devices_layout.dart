@@ -103,7 +103,7 @@ class Device_layout_State extends State<Device_layout>{
                     
                   physics: NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: Responsive.isMobile(context) ? 2 : Responsive.isTablet(context) ? 4 : 6, 
+                    crossAxisCount: Responsive.isMobilePortrait(context) ? 2 : Responsive.isMobileLandscape(context) || Responsive.isTablet(context) ? 4 : 6, 
                     crossAxisSpacing: 5.0, 
                     mainAxisSpacing: 25.0,
                     childAspectRatio: (1/.9)),
