@@ -94,7 +94,7 @@ class Device_layout_State extends State<Device_layout>{
                         fontWeight: FontWeight.w700,
                         fontFamily: "Roboto"),
                     ),
-                  padding: const EdgeInsets.only(top: 35.0, left: 20, bottom: 20),
+                  padding: Responsive.isMobilePortrait(context) ? const EdgeInsets.only(top: 40.0, left: 10) : const EdgeInsets.only(top: 15.0, left: 10),
                 ),
               ),
               Container(

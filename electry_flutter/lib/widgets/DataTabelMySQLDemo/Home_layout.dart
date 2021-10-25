@@ -108,6 +108,21 @@ class Home_layout_State extends State<Home_layout>{
           children: [
             new Container(
               alignment: Alignment.topLeft,
+              child: Responsive.isMobile(context) ? Padding(
+                child: Text(
+                  'Electry',
+                  style: const TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -0.2
+                  ),
+                ),
+                padding: Responsive.isMobilePortrait(context) ? const EdgeInsets.only(top: 40.0, left: 10) : const EdgeInsets.only(top: 15.0, left: 10),
+              ) : null,
+            ),
+            new Container(
+              alignment: Alignment.topLeft,
               child: Padding(
                 child:
                   new Text(
@@ -116,7 +131,7 @@ class Home_layout_State extends State<Home_layout>{
                       fontWeight: FontWeight.w700,
                       fontFamily: "Roboto"),
                   ),
-                padding: const EdgeInsets.only(top: 35.0, left: 20),
+                padding: Responsive.isMobile(context) ? const EdgeInsets.only(top: 5.0, left: 20) : const EdgeInsets.only(top: 35.0, left: 20),
               ),
             ),
             new Container(
@@ -129,7 +144,7 @@ class Home_layout_State extends State<Home_layout>{
                       fontWeight: FontWeight.w700,
                       fontFamily: "Roboto"),
                   ),
-                padding: const EdgeInsets.only(top: 15.0, left: 25.0,),
+                padding: const EdgeInsets.only(top: 15.0, left: 25.0),
               ),
             ),
             Container(

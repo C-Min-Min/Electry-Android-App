@@ -36,8 +36,8 @@ class CustomAppBar extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Expanded(
-            child: Text(
+          !Responsive.isMobile(context) ? Expanded(
+            child:  Text(
               'Electry',
               style: const TextStyle(
                 color: Colors.blueAccent,
@@ -46,10 +46,15 @@ class CustomAppBar extends StatelessWidget {
                 letterSpacing: -0.2
               ),
             ),
+          ) : Expanded(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              
+            ),
           ),
           Container(
             height: double.infinity,
-            width: Responsive.isDesktop(context) ? 1000 : Responsive.isTablet(context) ? 800 : 400,
+            width: Responsive.isDesktop(context) ? 1000 : Responsive.isTablet(context) ? 800 : 600,
             child: CustomTabBar(
               icons: icons,
               selectedIndex: selectedIndex,
