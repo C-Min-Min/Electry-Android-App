@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
-import 'Device.dart';
-import 'Device_info_layout.dart';
+import '../api_conn/Device.dart';
+import '../SecLayout/Device_info_layout.dart';
 bool isDarkMode;
-List<Color> color_palette;
+List<Color> colorPalette;
 
   Icon _icon(Device item) {
     Color clr;
-    if(item.dev_state == 1){
+    if(item.devState == 1){
       clr = Colors.black;
     }else{
-      clr = color_palette[0];
+      clr = colorPalette[0];
     }
-    if(item.image_path == 'lightbulb'){
+    if(item.imagePath == 'lightbulb'){
       return new Icon( 
         Icons.lightbulb_sharp,
         color: clr,
         size: 60.0,
       );
-    }else if(item.image_path == 'console'){
+    }else if(item.imagePath == 'console'){
       return new Icon( 
         Icons.videogame_asset_rounded,
         color: clr,
         size: 60.0,
       );
-    }else if(item.image_path == 'pc'){
+    }else if(item.imagePath == 'pc'){
       return new Icon( 
         Icons.computer_sharp,
         color: clr,
@@ -39,16 +39,16 @@ List<Color> color_palette;
     }
   } 
 
-  String _state(int State) {
-    if (State == 1){
+  String _state(int state) {
+    if (state == 1){
       return "On";
     }else{
       return "Off";
     }
   }
-  _color(int State, bool back_text) {
-    if(back_text){
-      if(State == 1){
+  _color(int state, bool backText) {
+    if(backText){
+      if(state == 1){
         return BoxDecoration(
           gradient: RadialGradient(
             colors: [
@@ -62,12 +62,12 @@ List<Color> color_palette;
         );
       }else{
         return BoxDecoration(
-            color: color_palette[2],
+            color: colorPalette[2],
             borderRadius: BorderRadius.all(Radius.circular(20))
           );
       }
     }else{
-      if(State == 1){
+      if(state == 1){
         return Colors.black;
       }else{
         return !isDarkMode ? Colors.black : Colors.white;
@@ -80,14 +80,14 @@ List<Color> color_palette;
     var brightness = SchedulerBinding.instance.window.platformBrightness;
     isDarkMode = brightness == Brightness.dark;
     if(isDarkMode){
-      color_palette = [Colors.white,Colors.black,Colors.grey[850]];
+      colorPalette = [Colors.white,Colors.black,Colors.grey[850]];
     }else{
-      color_palette = [Colors.black,Colors.white,Colors.grey[350]];
+      colorPalette = [Colors.black,Colors.white,Colors.grey[350]];
     }
     return GestureDetector(
             onTap: (){
-              print("${item.dev_id}");
-              Navigator.push(context, MaterialPageRoute(builder: (context)=>Device_info_layout(item.dev_id)));
+              print("${item.devId}");
+              Navigator.push(context, MaterialPageRoute(builder: (context)=>DeviceInfoLayout(item.devId)));
             },
             child: new Container(
             child: new Padding(
@@ -104,9 +104,9 @@ List<Color> color_palette;
                     
                     new Padding(
                       child: new Text(
-                      item.dev_name,
+                      item.devName,
                       style: new TextStyle(fontSize:20.0,
-                      color: _color(item.dev_state, false),
+                      color: _color(item.devState, false),
                       fontWeight: FontWeight.w600,
                       fontFamily: "Roboto"),
                       ),
@@ -114,9 +114,9 @@ List<Color> color_palette;
                     ),
                     new Padding(
                       child: new Text(
-                        _state(item.dev_state),
+                        _state(item.devState),
                         style: new TextStyle(fontSize:18.0,
-                        color: _color(item.dev_state, false),
+                        color: _color(item.devState, false),
                         fontWeight: FontWeight.w400,
                         fontFamily: "Roboto"),
                       ),
@@ -125,7 +125,7 @@ List<Color> color_palette;
                     
                   ],
                 ),
-                decoration: _color(item.dev_state, true),
+                decoration: _color(item.devState, true),
                 height: double.infinity,
                 width: double.infinity,
               ),
@@ -137,10 +137,10 @@ List<Color> color_palette;
           
           );
   }
-  class Device_built extends StatelessWidget{
+  class DeviceBuilt extends StatelessWidget{
     final Device item;
 
-    const Device_built({
+    const DeviceBuilt({
       Key key,
       @required this.item
     }) : super(key: key);

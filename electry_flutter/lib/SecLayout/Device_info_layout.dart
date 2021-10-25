@@ -1,7 +1,5 @@
-import 'dart:math';
-
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/Measurement.dart';
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/responsive.dart';
+import 'package:electry_flutter/api_conn/Measurement.dart';
+import 'package:electry_flutter/widgets/Responsive/responsive.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -9,27 +7,26 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:table_calendar/table_calendar.dart';
-import 'Device.dart';
-import 'Services.dart';
-class Device_info_layout extends StatefulWidget{
+import '../api_conn/Device.dart';
+import '../api_conn/Services.dart';
+class DeviceInfoLayout extends StatefulWidget{
   final int item;
-  Device_info_layout(this.item) : super();
+  DeviceInfoLayout(this.item) : super();
   @override
-  Device_info_layout_State createState() => Device_info_layout_State();
+  DeviceInfoLayoutState createState() => DeviceInfoLayoutState();
 }
 
-class Device_info_layout_State extends State<Device_info_layout>{
+class DeviceInfoLayoutState extends State<DeviceInfoLayout>{
   List<Device> _device;
-  bool dev_fav = false;
+  bool devFav = false;
   List<Measurement> _measure;
   final items = ['lightbulb', 'pc', 'console'];
-  String value_icon;
+  String valueIcon;
   TextEditingController _textFieldController = TextEditingController();
   List<FlSpot> measures = [FlSpot(0,0.5),FlSpot(24,0.5)];
   double maxY = 100;
-  GlobalKey<ScaffoldState> _scaffoldKey;
   bool isDarkMode;
-  List<Color> color_palette;
+  List<Color> colorPalette;
   List<Color> gradientColors = [
     Color(0xFF101820FF),
     Color(0xFF00B1D2FF),
@@ -41,7 +38,6 @@ class Device_info_layout_State extends State<Device_info_layout>{
   void initState() {
     _getDevice(widget.item);
     super.initState();
-    _scaffoldKey = GlobalKey();
     
   }
 
@@ -71,32 +67,29 @@ class Device_info_layout_State extends State<Device_info_layout>{
     measures = [];
     setState(() {
       if(_measure != null){
-      for(var measure_c = 0; measure_c < _measure.length; measure_c++){
-        List<String> shorter = _measure[measure_c].timestamp.toString().split("T");
-        String date ;
-        String time ;
+      for(var measureCount = 0; measureCount < _measure.length; measureCount++){
+        List<String> shorter = _measure[measureCount].timestamp.toString().split("T");
+        String date;
         double hour;
         if((int.parse(shorter[1].split(":")[0]) + 3) >= 24){
           date = shorter[0].split("-")[0] + "-" + shorter[0].split("-")[1]  + "-" + (int.parse(shorter[0].split("-")[2]) + 1).toString();
-          time = (int.parse(shorter[1].split(":")[0]) - 21).toString() + ":" + shorter[1].split(":")[1] + ":" + shorter[1].split(".")[0].split(":")[2];
           hour = (int.parse(shorter[1].split(":")[0]) - 21) + (int.parse(shorter[1].split(":")[1]) / 60);
         }else{
           date = shorter[0];
-          time = (int.parse(shorter[1].split(":")[0]) +3 ).toString() + ":" + shorter[1].split(":")[1] + ":" + shorter[1].split(".")[0].split(":")[2];
           hour = (int.parse(shorter[1].split(":")[0]) +3 ) + (int.parse(shorter[1].split(":")[1]) / 60);
         }
         
         if (date == selectDay) {
-          if(_measure[measure_c].state == 1){
+          if(_measure[measureCount].state == 1){
             measures.add(FlSpot(hour, 0.5));
           }
           
-          measures.add(FlSpot(hour, _measure[measure_c].power.toDouble()));
-          while (_measure[measure_c].power.toDouble() >= maxY){
+          measures.add(FlSpot(hour, _measure[measureCount].power.toDouble()));
+          while (_measure[measureCount].power.toDouble() >= maxY){
             maxY += 100;
           }
 
-          if(_measure[measure_c].state == 0){
+          if(_measure[measureCount].state == 0){
             measures.add(FlSpot(hour, 0.5));
           }
         }
@@ -110,24 +103,24 @@ class Device_info_layout_State extends State<Device_info_layout>{
 
 Icon _icon(Device item) {
     Color clr;
-    if(item.dev_state == 1){
+    if(item.devState == 1){
       clr = Colors.black;
     }else{
-      clr = color_palette[0];
+      clr = colorPalette[0];
     }
-    if(item.image_path == 'lightbulb'){
+    if(item.imagePath == 'lightbulb'){
       return new Icon( 
         Icons.lightbulb_sharp,
         color: clr,
         size: 60.0,
       );
-    }else if(item.image_path == 'console'){
+    }else if(item.imagePath == 'console'){
       return new Icon( 
         Icons.videogame_asset_rounded,
         color: clr,
         size: 60.0,
       );
-    }else if(item.image_path == 'pc'){
+    }else if(item.imagePath == 'pc'){
       return new Icon( 
         Icons.computer_sharp,
         color: clr,
@@ -142,9 +135,9 @@ Icon _icon(Device item) {
     }
   } 
 
-  _color(int State, bool back_text) {
-    if(back_text){
-      if(State == 1){
+  _color(int state, bool backText) {
+    if(backText){
+      if(state == 1){
         return BoxDecoration(
           gradient: RadialGradient(
             colors: [
@@ -158,12 +151,12 @@ Icon _icon(Device item) {
         );
       }else{
         return BoxDecoration(
-            color: color_palette[2],
+            color: colorPalette[2],
             borderRadius: BorderRadius.all(Radius.circular(20))
           );
       }
     }else{
-      if(State == 1){
+      if(state == 1){
         return Colors.black;
       }else{
         return !isDarkMode ? Colors.black : Colors.white;
@@ -171,15 +164,15 @@ Icon _icon(Device item) {
     }
 
   }
-  String _state(int State) {
-    if (State == 1){
+  String _state(int state) {
+    if (state == 1){
       return "On";
     }else{
       return "Off";
     }
   }
 
-  Container _device_info(Device item) {
+  Container deviceInfo(Device item) {
     return Container(
             child: new Padding(
               child: new Container(
@@ -195,9 +188,9 @@ Icon _icon(Device item) {
                     
                     new Padding(
                       child: new Text(
-                      item.dev_name,
+                      item.devName,
                       style: new TextStyle(fontSize:20.0,
-                      color: _color(item.dev_state, false),
+                      color: _color(item.devState, false),
                       fontWeight: FontWeight.w600,
                       fontFamily: "Roboto"),
                       ),
@@ -206,9 +199,9 @@ Icon _icon(Device item) {
                     
                     new Padding(
                       child: new Text(
-                      item.dev_desc,
+                      item.devDesc,
                       style: new TextStyle(fontSize:18.0,
-                      color: _color(item.dev_state, false),
+                      color: _color(item.devState, false),
                       fontWeight: FontWeight.w400,
                       fontFamily: "Roboto"),
                       ),
@@ -217,9 +210,9 @@ Icon _icon(Device item) {
 
                     new Padding(
                       child: new Text(
-                        _state(item.dev_state),
+                        _state(item.devState),
                         style: new TextStyle(fontSize:18.0,
-                        color: _color(item.dev_state, false),
+                        color: _color(item.devState, false),
                         fontWeight: FontWeight.w400,
                         fontFamily: "Roboto"),
                       ),
@@ -228,7 +221,7 @@ Icon _icon(Device item) {
                     
                   ],
                 ),
-                decoration: _color(item.dev_state, true)
+                decoration: _color(item.devState, true)
                 
               ),
               padding: const EdgeInsets.only(left: 20, right: 20),              
@@ -240,35 +233,35 @@ Icon _icon(Device item) {
   DateTime focusedDay;
   DateTime selectedDay;
 
-  bool get_dev_fav(Device item){
-    if (item.dev_fav == 1){
+  bool getDevFav(Device item){
+    if (item.devFav == 1){
       return true;
     }else{
       return false;
     }
   }
 
-  void change_dev_fav(Device item, bool state){
+  void changeDevFav(Device item, bool state){
     if (state){
-        _updateDevice(item.dev_id, "dev_fav", "1");
+        _updateDevice(item.devId, "devFav", "1");
       }else{
-        _updateDevice(item.dev_id, "dev_fav", "0");
+        _updateDevice(item.devId, "devFav", "0");
       }
   }
 
-  void change_dev(Device item, change, dev){
+  void changeDev(Device item, change, dev){
     if(change == "name"){
-      _updateDevice(item.dev_id, "dev_name", dev);
+      _updateDevice(item.devId, "devName", dev);
     }else if(change == "desc"){
-      _updateDevice(item.dev_id, "dev_desc", dev);
+      _updateDevice(item.devId, "devDesc", dev);
     }else if(change == "icon"){
-      _updateDevice(item.dev_id, "dev_icon", dev);
+      _updateDevice(item.devId, "dev_icon", dev);
     }
   }
 
   Future<void> _editIconDialog(BuildContext context, Device item){
-    if(items.contains(item.image_path)){
-      value_icon = item.image_path;
+    if(items.contains(item.imagePath)){
+      valueIcon = item.imagePath;
     }
     return showDialog(
       context: context,
@@ -285,7 +278,7 @@ Icon _icon(Device item) {
               border: Border.all(color: Colors.blueAccent, width: 4)
             ),
             child: DropdownButtonFormField<String>(
-              value: value_icon,
+              value: valueIcon,
               decoration: InputDecoration(
                 border: InputBorder.none,
                 focusedBorder: InputBorder.none,
@@ -297,20 +290,21 @@ Icon _icon(Device item) {
               items: items.map(buildIconsItem).toList(),
               onChanged: (value) {
                 setState(() {
-                  value_icon = value;
-                  print(value_icon);
+                  valueIcon = value;
+                  print(valueIcon);
                 });
               },
               onSaved: (value) {
                 setState(() {
-                  value_icon = value;
-                  print(value_icon);
+                  valueIcon = value;
+                  print(valueIcon);
                 });
               },
               
             ),
           ),
           actions: <Widget>[
+            // ignore: deprecated_member_use
             FlatButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -323,6 +317,7 @@ Icon _icon(Device item) {
                 });
               },
             ),
+            // ignore: deprecated_member_use
             FlatButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -331,8 +326,8 @@ Icon _icon(Device item) {
               child: Text('Save'),
               onPressed: () {
                 setState(() {
-                  change_dev(_device[0], "icon", value_icon);
-                  print(value_icon);
+                  changeDev(_device[0], "icon", valueIcon);
+                  print(valueIcon);
                   _getDevice(widget.item);
                   measurements(focusedDay.toString().split(" ")[0]);
                   Navigator.pop(context);
@@ -352,19 +347,19 @@ Icon _icon(Device item) {
       style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
     ),
   );
-  int line_count;
+  int lineCount;
   Future<void> _editStringDialog(BuildContext context, Device item, String change ){
     if(change == "name"){
-      line_count = 1;
+      lineCount = 1;
       _textFieldController.value = _textFieldController.value.copyWith(
-        text: item.dev_name,
-        selection: TextSelection.collapsed(offset: _textFieldController.value.selection.baseOffset + item.dev_name.length,),
+        text: item.devName,
+        selection: TextSelection.collapsed(offset: _textFieldController.value.selection.baseOffset + item.devName.length,),
       );
     }else if(change == "desc"){
-      line_count = 5;
+      lineCount = 5;
       _textFieldController.value = _textFieldController.value.copyWith(
-        text: item.dev_desc,
-        selection: TextSelection.collapsed(offset: _textFieldController.value.selection.baseOffset + item.dev_desc.length,),
+        text: item.devDesc,
+        selection: TextSelection.collapsed(offset: _textFieldController.value.selection.baseOffset + item.devDesc.length,),
 
       );
     }
@@ -385,7 +380,7 @@ Icon _icon(Device item) {
             ),
             child: TextFormField(
               keyboardType: TextInputType.multiline,
-              maxLines: line_count,
+              maxLines: lineCount,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
               decoration: new InputDecoration(
                 border: InputBorder.none,
@@ -404,6 +399,7 @@ Icon _icon(Device item) {
             ),
           ),
           actions: <Widget>[
+            // ignore: deprecated_member_use
             FlatButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -416,6 +412,7 @@ Icon _icon(Device item) {
                 });
               },
             ),
+            // ignore: deprecated_member_use
             FlatButton(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(12))),
@@ -425,7 +422,7 @@ Icon _icon(Device item) {
               onPressed: () {
                 setState(() {
                   codeDialog = valueText;
-                  change_dev(_device[0], change, codeDialog);
+                  changeDev(_device[0], change, codeDialog);
                   print(codeDialog);
                   _getDevice(widget.item);
                   measurements(focusedDay.toString().split(" ")[0]);
@@ -533,11 +530,11 @@ Icon _icon(Device item) {
     var brightness = SchedulerBinding.instance.window.platformBrightness;
     isDarkMode = brightness == Brightness.dark;
     if(isDarkMode){
-      color_palette = [Colors.white,Colors.black,Colors.grey[850]];
+      colorPalette = [Colors.white,Colors.black,Colors.grey[850]];
     }else{
-      color_palette = [Colors.black,Colors.white,Colors.grey[350]];
+      colorPalette = [Colors.black,Colors.white,Colors.grey[350]];
     }
-    dev_fav = get_dev_fav(_device[0]);
+    devFav = getDevFav(_device[0]);
     return Scaffold(
       body: RefreshIndicator(
         onRefresh: refresh,
@@ -557,7 +554,7 @@ Icon _icon(Device item) {
                   child: Padding(
                     child: 
                       new Text(
-                        _device[0].dev_name,
+                        _device[0].devName,
                           style: new TextStyle(fontSize:50.0,
                           fontWeight: FontWeight.w700,
                           fontFamily: "Roboto"),
@@ -565,7 +562,7 @@ Icon _icon(Device item) {
                     padding: const EdgeInsets.only(top: 45, left: 20, bottom: 20),
                   ),
                 ),
-                _device_info(_device[0]),
+                deviceInfo(_device[0]),
                 new Container(
                   alignment: Alignment.topLeft,
                   child: Padding(
@@ -581,7 +578,7 @@ Icon _icon(Device item) {
                 ),
                 Padding(
                   child: Container(
-                    decoration: BoxDecoration(color: color_palette[2],
+                    decoration: BoxDecoration(color: colorPalette[2],
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: TableCalendar(
                       firstDay: DateTime.utc(2021, 6, 1),
@@ -625,7 +622,7 @@ Icon _icon(Device item) {
                   padding: const EdgeInsets.only( left: 20, right: 20, bottom: 10),
                 ),
                 Container(
-                  decoration: BoxDecoration(color: color_palette[2],
+                  decoration: BoxDecoration(color: colorPalette[2],
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                   child: statistics(_device[0]),
                 ),
@@ -644,16 +641,16 @@ Icon _icon(Device item) {
                 ),
                 Padding(
                   child: Container(
-                    decoration: BoxDecoration(color: color_palette[2],
+                    decoration: BoxDecoration(color: colorPalette[2],
                       borderRadius: BorderRadius.all(Radius.circular(20))),
                     child: SwitchListTile(
-                      title: new Text('Favourite: ', style: new TextStyle(fontSize: 25, color: color_palette[0], fontWeight: FontWeight.w500, fontFamily: "Roboto"),),
-                      value: dev_fav,
+                      title: new Text('Favourite: ', style: new TextStyle(fontSize: 25, color: colorPalette[0], fontWeight: FontWeight.w500, fontFamily: "Roboto"),),
+                      value: devFav,
                       activeColor: Colors.blueAccent,
                       onChanged: (bool value) {
                         setState(() {
-                          dev_fav = value;
-                          change_dev_fav(_device[0], value);
+                          devFav = value;
+                          changeDevFav(_device[0], value);
                            _getDevice(widget.item);
                           measurements(focusedDay.toString().split(" ")[0]);
                         });
@@ -664,10 +661,10 @@ Icon _icon(Device item) {
                 ),
                 Padding(
                   child: OutlinedButton.icon(
-                    label: new Text('Edit name', style: new TextStyle(fontSize: 25, color: color_palette[0], fontWeight: FontWeight.w500, fontFamily: "Roboto"),),
-                    icon: Icon(Icons.edit, size: 18,color: color_palette[0],),
+                    label: new Text('Edit name', style: new TextStyle(fontSize: 25, color: colorPalette[0], fontWeight: FontWeight.w500, fontFamily: "Roboto"),),
+                    icon: Icon(Icons.edit, size: 18,color: colorPalette[0],),
                     style: OutlinedButton.styleFrom(
-                      backgroundColor: color_palette[2],
+                      backgroundColor: colorPalette[2],
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                       minimumSize: Size(MediaQuery.of(context).size.width, 50)
                     ),
@@ -679,10 +676,10 @@ Icon _icon(Device item) {
                 ),
                 Padding(
                   child: OutlinedButton.icon(
-                    label: new Text('Edit description', style: new TextStyle(fontSize: 25, color: color_palette[0], fontWeight: FontWeight.w500, fontFamily: "Roboto"),),
-                    icon: Icon(Icons.edit, size: 18,color: color_palette[0]),
+                    label: new Text('Edit description', style: new TextStyle(fontSize: 25, color: colorPalette[0], fontWeight: FontWeight.w500, fontFamily: "Roboto"),),
+                    icon: Icon(Icons.edit, size: 18,color: colorPalette[0]),
                     style: OutlinedButton.styleFrom(
-                      backgroundColor: color_palette[2],
+                      backgroundColor: colorPalette[2],
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                       minimumSize: Size(MediaQuery.of(context).size.width, 50)
                     ),
@@ -694,10 +691,10 @@ Icon _icon(Device item) {
                 ),
                 Padding(
                   child: OutlinedButton.icon(
-                    label: new Text('Edit icon', style: new TextStyle(fontSize: 25, color: color_palette[0], fontWeight: FontWeight.w500, fontFamily: "Roboto"),),
-                    icon: Icon(Icons.edit, size: 18, color: color_palette[0],),
+                    label: new Text('Edit icon', style: new TextStyle(fontSize: 25, color: colorPalette[0], fontWeight: FontWeight.w500, fontFamily: "Roboto"),),
+                    icon: Icon(Icons.edit, size: 18, color: colorPalette[0],),
                     style: OutlinedButton.styleFrom(
-                      backgroundColor: color_palette[2],
+                      backgroundColor: colorPalette[2],
                       shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
                       minimumSize: Size(MediaQuery.of(context).size.width, 50)
                     ),

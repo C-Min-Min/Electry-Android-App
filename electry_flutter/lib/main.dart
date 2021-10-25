@@ -1,5 +1,4 @@
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/app.dart';
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/nav_layout.dart';
+import 'package:electry_flutter/widgets/Responsive/nav_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:electry_flutter/theme_provider.dart';
 

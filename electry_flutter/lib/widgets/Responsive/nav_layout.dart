@@ -1,7 +1,7 @@
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/custom_app_bar.dart';
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/custom_tab_bar.dart';
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/layouts.dart';
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/responsive.dart';
+import 'package:electry_flutter/widgets/Responsive/custom_app_bar.dart';
+import 'package:electry_flutter/widgets/Responsive/custom_tab_bar.dart';
+import 'package:electry_flutter/widgets/Responsive/layouts.dart';
+import 'package:electry_flutter/widgets/Responsive/responsive.dart';
 import 'package:flutter/material.dart';
 
 class NavLayout extends StatefulWidget {
@@ -11,8 +11,8 @@ class NavLayout extends StatefulWidget {
 
 class _NavLayoutState extends State<NavLayout> {
   final List<Widget> _screens = [
-    Home_layout(),
-    Device_layout(),
+    HomeLayout(),
+    DeviceLayout(),
     Scaffold(),
     Scaffold(),
     Scaffold(),

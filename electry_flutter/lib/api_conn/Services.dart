@@ -1,5 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:convert';
-import 'package:electry_flutter/widgets/DataTabelMySQLDemo/Measurement.dart';
+import 'package:electry_flutter/api_conn/Measurement.dart';
 import 'package:http/http.dart' as http;
 import 'Device.dart';
 
@@ -8,7 +10,6 @@ class Services {
   static const _GET_ALL_ACTION = 'all';
   static const _SEARCH_ACTION = 'search';
   static const _EDIT_ACTION = 'edit';
-  static const _DELETE_ACTION = 'delete';
   static const _GET_MEASUREMENTS_ACTION = 'measurements';
 
   static Future<List<Device>> getDevices() async{
@@ -28,11 +29,11 @@ class Services {
     }
   }
 
-  static Future<List<Device>> searchDevice(int Id) async{
+  static Future<List<Device>> searchDevice(int id) async{
     try{
       var map = Map<String, dynamic>();
       map['sub_api'] = _SEARCH_ACTION;
-      map['search'] = Id.toString();
+      map['search'] = id.toString();
       final response = await http.post(ROOT, body: map);
       print('Get Table Response: ${response.body}');
       if(200 == response.statusCode){
@@ -46,11 +47,11 @@ class Services {
     }
   }
 
-  static Future<List<Measurement>> getMeasurements(int Id) async{
+  static Future<List<Measurement>> getMeasurements(int id) async{
     try{
       var map = Map<String, dynamic>();
       map['sub_api'] = _GET_MEASUREMENTS_ACTION;
-      map['id'] = Id.toString();
+      map['id'] = id.toString();
       final response = await http.post(ROOT, body: map);
       print('Get Table Response: ${response.body}');
       if(200 == response.statusCode){
@@ -67,11 +68,11 @@ class Services {
     }
   }
 
-  static updateDevice(int Id, String change, String dev) async{
+  static updateDevice(int id, String change, String dev) async{
     try{
       var map = Map<String, dynamic>();
       map['sub_api'] = _EDIT_ACTION;
-      map['id'] = Id.toString();
+      map['id'] = id.toString();
       map['change_set'] = change;
       map['dev_x'] = dev;
       final response = await http.post(ROOT, body: map);
