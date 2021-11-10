@@ -78,7 +78,21 @@ class DeviceLayoutState extends State<DeviceLayout>{
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              
+              new Container(
+              alignment: Alignment.topLeft,
+              child: Responsive.isMobile(context) ? Padding(
+                child: Text(
+                  'Electry',
+                  style: const TextStyle(
+                    color: Colors.blueAccent,
+                    fontSize: 50,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: -0.2
+                  ),
+                ),
+                padding: Responsive.isMobilePortrait(context) ? const EdgeInsets.only(top: 40.0, left: 10) : const EdgeInsets.only(top: 15.0, left: 10),
+              ) : null,
+            ),
               new Container(
                 alignment: Alignment.topLeft,
                 child: Padding(
@@ -89,7 +103,7 @@ class DeviceLayoutState extends State<DeviceLayout>{
                         fontWeight: FontWeight.w700,
                         fontFamily: "Roboto"),
                     ),
-                  padding: Responsive.isMobilePortrait(context) ? const EdgeInsets.only(top: 40.0, left: 10) : const EdgeInsets.only(top: 15.0, left: 10),
+                  padding: Responsive.isMobile(context) ? const EdgeInsets.only(top: 5.0, left: 20) : const EdgeInsets.only(top: 35.0, left: 20),
                 ),
               ),
               Container(

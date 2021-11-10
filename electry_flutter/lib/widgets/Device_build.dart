@@ -105,7 +105,9 @@ List<Color> colorPalette;
                     new Padding(
                       child: new Text(
                       item.devName,
+                      maxLines: 3,
                       style: new TextStyle(fontSize:20.0,
+                      overflow: TextOverflow.ellipsis,
                       color: _color(item.devState, false),
                       fontWeight: FontWeight.w600,
                       fontFamily: "Roboto"),

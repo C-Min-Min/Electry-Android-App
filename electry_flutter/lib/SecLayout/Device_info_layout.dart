@@ -520,6 +520,7 @@ Icon _icon(Device item) {
 
   @override
   Widget build(BuildContext context) {
+    
     if (focusedDay == null && selectedDay == null){
       if (_measure != null){
         focusedDay = DateTime.parse(_measure[_measure.length - 1].timestamp);
@@ -533,6 +534,9 @@ Icon _icon(Device item) {
       colorPalette = [Colors.white,Colors.black,Colors.grey[850]];
     }else{
       colorPalette = [Colors.black,Colors.white,Colors.grey[350]];
+    }
+    if(_device[0].devName == ""){
+      Navigator.pop(context);
     }
     devFav = getDevFav(_device[0]);
     return Scaffold(
