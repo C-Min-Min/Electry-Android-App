@@ -244,17 +244,17 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
 
   void changeDevFav(Device item, bool state) {
     if (state) {
-      _updateDevice(item.devId, "devFav", "1");
+      _updateDevice(item.devId, "dev_fav", "1");
     } else {
-      _updateDevice(item.devId, "devFav", "0");
+      _updateDevice(item.devId, "dev_fav", "0");
     }
   }
 
   void changeDev(Device item, change, dev) {
     if (change == "name") {
-      _updateDevice(item.devId, "devName", dev);
+      _updateDevice(item.devId, "dev_name", dev);
     } else if (change == "desc") {
-      _updateDevice(item.devId, "devDesc", dev);
+      _updateDevice(item.devId, "dev_desc", dev);
     } else if (change == "icon") {
       _updateDevice(item.devId, "dev_icon", dev);
     }
@@ -787,12 +787,6 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
                                           focusedDay = focusDay;
                                           selectedDay = selectDay;
                                         });
-                                        print(focusedDay
-                                            .toString()
-                                            .split(" ")[0]);
-                                        measurements(focusedDay
-                                            .toString()
-                                            .split(" ")[0]);
                                       },
                                       calendarStyle: CalendarStyle(
                                           isTodayHighlighted: true,
@@ -884,7 +878,6 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
                                 focusedDay = focusDay;
                                 selectedDay = selectDay;
                               });
-                              print(focusedDay.toString().split(" ")[0]);
                               measurements(focusedDay.toString().split(" ")[0]);
                             },
                             calendarStyle: CalendarStyle(
