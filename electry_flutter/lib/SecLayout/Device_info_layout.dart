@@ -575,13 +575,6 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
                     ),
                   ],
                 ),
-
-                /*centerTitle: true,
-
-              leading: IconButton(
-                icon: Icon(Icons.arrow_back),
-                onPressed: () => Navigator.pop(context),
-              ),*/
               ),
             )
           : null,

@@ -104,7 +104,7 @@ class HomeLayoutState extends State<HomeLayout> {
                 child: Responsive.isMobile(context)
                     ? Padding(
                         child: Text(
-                          'Electry',
+                          'electry',
                           style: const TextStyle(
                               color: Colors.blueAccent,
                               fontSize: 50,

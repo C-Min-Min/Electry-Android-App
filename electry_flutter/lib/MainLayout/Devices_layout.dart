@@ -83,7 +83,7 @@ class DeviceLayoutState extends State<DeviceLayout> {
                 child: Responsive.isMobile(context)
                     ? Padding(
                         child: Text(
-                          'Electry',
+                          'electry',
                           style: const TextStyle(
                               color: Colors.blueAccent,
                               fontSize: 50,

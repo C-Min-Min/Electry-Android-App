@@ -11,6 +11,8 @@ class Services {
   static const _SEARCH_ACTION = 'search';
   static const _EDIT_ACTION = 'edit';
   static const _GET_MEASUREMENTS_ACTION = 'measurements';
+  static const _SIGN_UP_ACTION = 'sign';
+  static const _LOGIN_ACTION = 'login';
 
   static Future<List<Device>> getDevices() async {
     try {
@@ -73,6 +75,43 @@ class Services {
       map['dev_x'] = dev;
       final response = await http.post(ROOT, body: map);
       if (200 != response.statusCode) {
+        print("not 200: ${response.statusCode}");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static signUser(String username, String password, String email) async {
+    try {
+      var map = Map<String, dynamic>();
+      map['sub_api'] = _LOGIN_ACTION;
+      map['user'] = username;
+      map['pass'] = password;
+      map['email'] = email;
+      final response = await http.post(ROOT, body: map);
+      if (200 != response.statusCode) {
+        print("not 200: ${response.statusCode}");
+      }
+    } catch (e) {
+      print(e);
+    }
+  }
+
+  static loginUser(String userMail, String password) async {
+    try {
+      var map = Map<String, dynamic>();
+      map['sub_api'] = _LOGIN_ACTION;
+      map['user'] = userMail;
+      map['pass'] = password;
+      final response = await http.post(ROOT, body: map);
+      if (200 == response.statusCode) {
+        if (response.body.isNotEmpty) {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
         print("not 200: ${response.statusCode}");
       }
     } catch (e) {
