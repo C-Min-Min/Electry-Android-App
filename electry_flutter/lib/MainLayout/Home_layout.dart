@@ -1,4 +1,3 @@
-import 'package:electry_flutter/MainLayout/Devices_layout.dart';
 import 'package:electry_flutter/widgets/Responsive/responsive.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +6,8 @@ import '../api_conn/Services.dart';
 import '../widgets/Device_build.dart';
 
 class HomeLayout extends StatefulWidget {
-  HomeLayout() : super();
+  final String privileges;
+  HomeLayout(this.privileges) : super();
   @override
   HomeLayoutState createState() => HomeLayoutState();
 }
@@ -29,39 +29,6 @@ class HomeLayoutState extends State<HomeLayout> {
     onDevices = 0;
     favDevices = [];
     _getDevices();
-  }
-
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-    pageLayout();
-  }
-
-  void pageLayout() {
-    if (selectedIndex == 1) {
-      Navigator.push(
-          context,
-          PageRouteBuilder(
-              transitionDuration: Duration(milliseconds: 300),
-              fullscreenDialog: true,
-              transitionsBuilder: (BuildContext context,
-                  Animation<double> animation,
-                  Animation<double> secAnimation,
-                  Widget child) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                    begin: Offset(1, 0),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                );
-              },
-              pageBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secAnimation) {
-                return DeviceLayout();
-              }));
-    }
   }
 
   _getDevices() {
@@ -166,7 +133,11 @@ class HomeLayoutState extends State<HomeLayout> {
                         item = _devices[index];
                       }
 
-                      return GridTile(child: DeviceBuilt(item: item));
+                      return GridTile(
+                          child: DeviceBuilt(
+                        item: item,
+                        privileges: widget.privileges,
+                      ));
                     },
                   ),
                 ),
@@ -208,6 +179,7 @@ class HomeLayoutState extends State<HomeLayout> {
                       return GridTile(
                           child: DeviceBuilt(
                         item: item,
+                        privileges: widget.privileges,
                       ));
                     },
                   ),

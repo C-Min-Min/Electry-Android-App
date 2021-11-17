@@ -12,15 +12,16 @@ import '../api_conn/Services.dart';
 
 class DeviceInfoLayout extends StatefulWidget {
   final int item;
-  DeviceInfoLayout(this.item) : super();
+  final String privileges;
+  DeviceInfoLayout(this.item, this.privileges) : super();
   @override
   DeviceInfoLayoutState createState() => DeviceInfoLayoutState();
 }
 
 class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
-  List<Device> _device;
+  List<Device> _device = [];
   bool devFav = false;
-  List<Measurement> _measure;
+  List<Measurement> _measure = [];
   final items = ['lightbulb', 'pc', 'console'];
   String valueIcon;
   TextEditingController _textFieldController = TextEditingController();
@@ -49,7 +50,6 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
       setState(() {
         _device = device;
       });
-      print("Length ${device.length}");
     });
     Services.getMeasurements(id).then((measure) {
       setState(() {
@@ -227,6 +227,7 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
         padding: const EdgeInsets.only(left: 20, right: 20),
       ),
       width: MediaQuery.of(context).size.width,
+      height: MediaQuery.of(context).size.height * 0.3,
     );
   }
 
@@ -293,13 +294,11 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
                 onChanged: (value) {
                   setState(() {
                     valueIcon = value;
-                    print(valueIcon);
                   });
                 },
                 onSaved: (value) {
                   setState(() {
                     valueIcon = value;
-                    print(valueIcon);
                   });
                 },
               ),
@@ -328,7 +327,6 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
                 onPressed: () {
                   setState(() {
                     changeDev(_device[0], "icon", valueIcon);
-                    print(valueIcon);
                     _getDevice(widget.item);
                     measurements(focusedDay.toString().split(" ")[0]);
                     Navigator.pop(context);
@@ -427,7 +425,7 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
                   setState(() {
                     codeDialog = valueText;
                     changeDev(_device[0], change, codeDialog);
-                    print(codeDialog);
+
                     _getDevice(widget.item);
                     measurements(focusedDay.toString().split(" ")[0]);
                     Navigator.pop(context);
@@ -512,10 +510,131 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
         ));
   }
 
+  Column settings() {
+    return Column(
+      children: [
+        new Container(
+          alignment: Alignment.topLeft,
+          child: Padding(
+            child: new Text(
+              "Settings",
+              style: new TextStyle(
+                  fontSize: 40.0,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: "Roboto"),
+            ),
+            padding: const EdgeInsets.only(top: 25, left: 30, bottom: 20),
+          ),
+        ),
+        Padding(
+          child: Container(
+            decoration: BoxDecoration(
+                color: colorPalette[2],
+                borderRadius: BorderRadius.all(Radius.circular(20))),
+            child: SwitchListTile(
+                title: new Text(
+                  'Favourite: ',
+                  style: new TextStyle(
+                      fontSize: 25,
+                      color: colorPalette[0],
+                      fontWeight: FontWeight.w500,
+                      fontFamily: "Roboto"),
+                ),
+                value: devFav,
+                activeColor: Colors.blueAccent,
+                onChanged: (bool value) {
+                  setState(() {
+                    devFav = value;
+                    changeDevFav(_device[0], value);
+                    _getDevice(widget.item);
+                    measurements(focusedDay.toString().split(" ")[0]);
+                  });
+                }),
+          ),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+        ),
+        Padding(
+          child: OutlinedButton.icon(
+            label: new Text(
+              'Edit name',
+              style: new TextStyle(
+                  fontSize: 25,
+                  color: colorPalette[0],
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Roboto"),
+            ),
+            icon: Icon(
+              Icons.edit,
+              size: 18,
+              color: colorPalette[0],
+            ),
+            style: OutlinedButton.styleFrom(
+                backgroundColor: colorPalette[2],
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                minimumSize: Size(MediaQuery.of(context).size.width, 50)),
+            onPressed: () {
+              _editStringDialog(context, _device[0], "name");
+            },
+          ),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+        ),
+        Padding(
+          child: OutlinedButton.icon(
+            label: new Text(
+              'Edit description',
+              style: new TextStyle(
+                  fontSize: 25,
+                  color: colorPalette[0],
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Roboto"),
+            ),
+            icon: Icon(Icons.edit, size: 18, color: colorPalette[0]),
+            style: OutlinedButton.styleFrom(
+                backgroundColor: colorPalette[2],
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                minimumSize: Size(MediaQuery.of(context).size.width, 50)),
+            onPressed: () {
+              _editStringDialog(context, _device[0], "desc");
+            },
+          ),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+        ),
+        Padding(
+          child: OutlinedButton.icon(
+            label: new Text(
+              'Edit icon',
+              style: new TextStyle(
+                  fontSize: 25,
+                  color: colorPalette[0],
+                  fontWeight: FontWeight.w500,
+                  fontFamily: "Roboto"),
+            ),
+            icon: Icon(
+              Icons.edit,
+              size: 18,
+              color: colorPalette[0],
+            ),
+            style: OutlinedButton.styleFrom(
+                backgroundColor: colorPalette[2],
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(20))),
+                minimumSize: Size(MediaQuery.of(context).size.width, 50)),
+            onPressed: () {
+              _editIconDialog(context, _device[0]);
+            },
+          ),
+          padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
+        ),
+      ],
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     if (focusedDay == null && selectedDay == null) {
-      if (_measure != null) {
+      if (_measure.length != 0) {
         focusedDay = DateTime.parse(_measure[_measure.length - 1].timestamp);
         selectedDay = DateTime.parse(_measure[_measure.length - 1].timestamp);
         measurements(focusedDay.toString().split(" ")[0]);
@@ -528,510 +647,294 @@ class DeviceInfoLayoutState extends State<DeviceInfoLayout> {
     } else {
       colorPalette = [Colors.black, Colors.white, Colors.grey[350]];
     }
-    if (_device[0].devName == "") {
-      Navigator.pop(context);
+    if (_device.length != 0) {
+      devFav = getDevFav(_device[0]);
     }
-    devFav = getDevFav(_device[0]);
     return Scaffold(
-      appBar: Responsive.isDesktop(context)
-          ? PreferredSize(
-              preferredSize: Size(MediaQuery.of(context).size.width, 100),
-              child: Container(
-                padding: const EdgeInsets.symmetric(horizontal: 20),
-                height: 65,
-                decoration: BoxDecoration(
-                    color: isDarkMode ? Color(0xFF080808) : Colors.white,
-                    boxShadow: const [
-                      BoxShadow(
-                        color: Colors.black12,
-                        offset: Offset(0, 2),
-                        blurRadius: 4,
-                      )
-                    ]),
-                child: Row(
-                  children: [
-                    IconButton(
-                      alignment: Alignment.centerLeft,
-                      padding: EdgeInsets.only(),
-                      icon: Icon(
-                        Icons.arrow_back,
-                        size: 40,
-                      ),
-                      color: Colors.blueAccent,
-                      onPressed: () {
-                        Navigator.pop(context);
-                      },
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.only(left: 30, right: 20),
-                      child: Text(
-                        _device[0].devName,
-                        style: const TextStyle(
-                            color: Colors.blueAccent,
-                            fontSize: 50,
-                            fontWeight: FontWeight.bold,
-                            letterSpacing: -0.2),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            )
-          : null,
-      body: RefreshIndicator(
-        onRefresh: refresh,
-        child: GestureDetector(
-          onPanUpdate: !Responsive.isDesktop(context)
-              ? (details) {
-                  if (details.delta.dx > 0) {
-                    Navigator.pop(context);
-                  }
-                }
-              : null,
-          child: SingleChildScrollView(
-            physics: AlwaysScrollableScrollPhysics(),
-            child: Responsive.isDesktop(context)
-                ? Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        appBar: (_measure.length != 0 && _device.length != 0)
+            ? (Responsive.isDesktop(context)
+                ? PreferredSize(
+                    preferredSize: Size(MediaQuery.of(context).size.width, 100),
+                    child: Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      height: 65,
+                      decoration: BoxDecoration(
+                          color: isDarkMode ? Color(0xFF080808) : Colors.white,
+                          boxShadow: const [
+                            BoxShadow(
+                              color: Colors.black12,
+                              offset: Offset(0, 2),
+                              blurRadius: 4,
+                            )
+                          ]),
+                      child: Row(
                         children: [
-                          Expanded(
-                            child: Column(
-                              children: [
-                                deviceInfo(_device[0]),
-                                new Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    child: new Text(
-                                      "Settings",
-                                      style: new TextStyle(
-                                          fontSize: 40.0,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: "Roboto"),
-                                    ),
-                                    padding: const EdgeInsets.only(
-                                        top: 25, left: 30, bottom: 20),
-                                  ),
-                                ),
-                                Padding(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: colorPalette[2],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))),
-                                    child: SwitchListTile(
-                                        title: new Text(
-                                          'Favourite: ',
-                                          style: new TextStyle(
-                                              fontSize: 35,
-                                              color: colorPalette[0],
-                                              fontWeight: FontWeight.w500,
-                                              fontFamily: "Roboto"),
-                                        ),
-                                        value: devFav,
-                                        activeColor: Colors.blueAccent,
-                                        onChanged: (bool value) {
-                                          setState(() {
-                                            devFav = value;
-                                            changeDevFav(_device[0], value);
-                                            _getDevice(widget.item);
-                                            measurements(focusedDay
-                                                .toString()
-                                                .split(" ")[0]);
-                                          });
-                                        }),
-                                  ),
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, bottom: 10),
-                                ),
-                                Padding(
-                                  child: OutlinedButton.icon(
-                                    label: new Text(
-                                      'Edit name',
-                                      style: new TextStyle(
-                                          fontSize: 35,
-                                          color: colorPalette[0],
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: "Roboto"),
-                                    ),
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 25,
-                                      color: colorPalette[0],
-                                    ),
-                                    style: OutlinedButton.styleFrom(
-                                        backgroundColor: colorPalette[2],
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20))),
-                                        minimumSize: Size(
-                                            MediaQuery.of(context).size.width,
-                                            50)),
-                                    onPressed: () {
-                                      _editStringDialog(
-                                          context, _device[0], "name");
-                                    },
-                                  ),
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, bottom: 10),
-                                ),
-                                Padding(
-                                  child: OutlinedButton.icon(
-                                    label: new Text(
-                                      'Edit description',
-                                      style: new TextStyle(
-                                          fontSize: 35,
-                                          color: colorPalette[0],
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: "Roboto"),
-                                    ),
-                                    icon: Icon(Icons.edit,
-                                        size: 25, color: colorPalette[0]),
-                                    style: OutlinedButton.styleFrom(
-                                        backgroundColor: colorPalette[2],
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20))),
-                                        minimumSize: Size(
-                                            MediaQuery.of(context).size.width,
-                                            50)),
-                                    onPressed: () {
-                                      _editStringDialog(
-                                          context, _device[0], "desc");
-                                    },
-                                  ),
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, bottom: 10),
-                                ),
-                                Padding(
-                                  child: OutlinedButton.icon(
-                                    label: new Text(
-                                      'Edit icon',
-                                      style: new TextStyle(
-                                          fontSize: 35,
-                                          color: colorPalette[0],
-                                          fontWeight: FontWeight.w500,
-                                          fontFamily: "Roboto"),
-                                    ),
-                                    icon: Icon(
-                                      Icons.edit,
-                                      size: 25,
-                                      color: colorPalette[0],
-                                    ),
-                                    style: OutlinedButton.styleFrom(
-                                        backgroundColor: colorPalette[2],
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.all(
-                                                Radius.circular(20))),
-                                        minimumSize: Size(
-                                            MediaQuery.of(context).size.width,
-                                            50)),
-                                    onPressed: () {
-                                      _editIconDialog(context, _device[0]);
-                                    },
-                                  ),
-                                  padding: const EdgeInsets.only(
-                                      left: 20, right: 20, bottom: 10),
-                                ),
-                              ],
+                          IconButton(
+                            alignment: Alignment.centerLeft,
+                            padding: EdgeInsets.only(),
+                            icon: Icon(
+                              Icons.arrow_back,
+                              size: 40,
+                            ),
+                            color: Colors.blueAccent,
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30, right: 20),
+                            child: Text(
+                              _device[0].devName,
+                              style: const TextStyle(
+                                  color: Colors.blueAccent,
+                                  fontSize: 50,
+                                  fontWeight: FontWeight.bold,
+                                  letterSpacing: -0.2),
                             ),
                           ),
-                          Expanded(
-                            child: Column(
-                              children: [
-                                new Container(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    child: new Text(
-                                      "Stats",
-                                      style: new TextStyle(
-                                          fontSize: 50.0,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: "Roboto"),
+                        ],
+                      ),
+                    ),
+                  )
+                : null)
+            : null,
+        body: (_measure.length != 0 && _device.length != 0)
+            ? (RefreshIndicator(
+                onRefresh: refresh,
+                child: GestureDetector(
+                  onPanUpdate: !Responsive.isDesktop(context)
+                      ? (details) {
+                          if (details.delta.dx > 0) {
+                            Navigator.pop(context);
+                          }
+                        }
+                      : null,
+                  child: SingleChildScrollView(
+                    physics: AlwaysScrollableScrollPhysics(),
+                    child: Responsive.isDesktop(context)
+                        ? Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        deviceInfo(_device[0]),
+                                        (widget.privileges == "admin")
+                                            ? settings()
+                                            : SizedBox(
+                                                height: 30,
+                                              )
+                                      ],
                                     ),
-                                    padding: const EdgeInsets.only(
-                                        top: 25, left: 30, bottom: 20),
                                   ),
-                                ),
-                                Padding(
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: colorPalette[2],
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(20))),
-                                    child: TableCalendar(
-                                      firstDay: DateTime.utc(2021, 6, 1),
-                                      lastDay: DateTime.utc(2024, 12, 31),
-                                      focusedDay: selectedDay,
-                                      calendarFormat: format,
-                                      onFormatChanged:
-                                          (CalendarFormat _format) {
-                                        setState(() {
-                                          format = _format;
-                                        });
-                                      },
-                                      startingDayOfWeek:
-                                          StartingDayOfWeek.monday,
-                                      daysOfWeekVisible: true,
-                                      onDaySelected: (DateTime selectDay,
-                                          DateTime focusDay) {
-                                        setState(() {
-                                          focusedDay = focusDay;
-                                          selectedDay = selectDay;
-                                        });
-                                      },
-                                      calendarStyle: CalendarStyle(
-                                          isTodayHighlighted: true,
-                                          selectedDecoration: BoxDecoration(
-                                            color: Colors.blueAccent,
-                                            shape: BoxShape.circle,
+                                  Expanded(
+                                    child: Column(
+                                      children: [
+                                        new Container(
+                                          alignment: Alignment.topLeft,
+                                          child: Padding(
+                                            child: new Text(
+                                              "Stats",
+                                              style: new TextStyle(
+                                                  fontSize: 50.0,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontFamily: "Roboto"),
+                                            ),
+                                            padding: const EdgeInsets.only(
+                                                top: 25, left: 30, bottom: 20),
                                           ),
-                                          todayDecoration: BoxDecoration(
-                                              color: Colors.grey,
-                                              shape: BoxShape.circle),
-                                          selectedTextStyle: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 18),
-                                          todayTextStyle:
-                                              TextStyle(fontSize: 17)),
-                                      selectedDayPredicate: (DateTime date) {
-                                        return isSameDay(selectedDay, date);
-                                      },
+                                        ),
+                                        Padding(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: colorPalette[2],
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(20))),
+                                            child: TableCalendar(
+                                              firstDay:
+                                                  DateTime.utc(2021, 6, 1),
+                                              lastDay:
+                                                  DateTime.utc(2024, 12, 31),
+                                              focusedDay: focusedDay,
+                                              calendarFormat: format,
+                                              onFormatChanged:
+                                                  (CalendarFormat _format) {
+                                                setState(() {
+                                                  format = _format;
+                                                });
+                                              },
+                                              startingDayOfWeek:
+                                                  StartingDayOfWeek.monday,
+                                              daysOfWeekVisible: true,
+                                              onDaySelected:
+                                                  (DateTime selectDay,
+                                                      DateTime focusDay) {
+                                                setState(() {
+                                                  focusedDay = focusDay;
+                                                  selectedDay = selectDay;
+                                                  measurements(focusedDay
+                                                      .toString()
+                                                      .split(" ")[0]);
+                                                });
+                                              },
+                                              calendarStyle: CalendarStyle(
+                                                  isTodayHighlighted: true,
+                                                  selectedDecoration:
+                                                      BoxDecoration(
+                                                    color: Colors.blueAccent,
+                                                    shape: BoxShape.circle,
+                                                  ),
+                                                  todayDecoration:
+                                                      BoxDecoration(
+                                                          color: Colors.grey,
+                                                          shape:
+                                                              BoxShape.circle),
+                                                  selectedTextStyle: TextStyle(
+                                                      color: Colors.black,
+                                                      fontSize: 18),
+                                                  todayTextStyle:
+                                                      TextStyle(fontSize: 17)),
+                                              selectedDayPredicate:
+                                                  (DateTime date) {
+                                                return isSameDay(
+                                                    selectedDay, date);
+                                              },
+                                            ),
+                                          ),
+                                          padding:
+                                              const EdgeInsets.only(bottom: 10),
+                                        ),
+                                        Container(
+                                          decoration: BoxDecoration(
+                                              color: colorPalette[2],
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(20))),
+                                          child: statistics(_device[0]),
+                                        ),
+                                      ],
                                     ),
+                                  )
+                                ],
+                              ),
+                            ],
+                          )
+                        : Column(
+                            children: [
+                              new Container(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  child: new Text(
+                                    _device[0].devName,
+                                    style: new TextStyle(
+                                        fontSize: 50.0,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: "Roboto"),
                                   ),
-                                  padding: const EdgeInsets.only(bottom: 10),
+                                  padding: const EdgeInsets.only(
+                                      top: 45, left: 20, bottom: 20),
                                 ),
-                                Container(
+                              ),
+                              deviceInfo(_device[0]),
+                              new Container(
+                                alignment: Alignment.topLeft,
+                                child: Padding(
+                                  child: new Text(
+                                    "Stats",
+                                    style: new TextStyle(
+                                        fontSize: 40.0,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: "Roboto"),
+                                  ),
+                                  padding: const EdgeInsets.only(
+                                      top: 25, left: 30, bottom: 20),
+                                ),
+                              ),
+                              Padding(
+                                child: Container(
                                   decoration: BoxDecoration(
                                       color: colorPalette[2],
                                       borderRadius: BorderRadius.all(
                                           Radius.circular(20))),
-                                  child: statistics(_device[0]),
+                                  child: TableCalendar(
+                                    firstDay: DateTime.utc(2021, 6, 1),
+                                    lastDay: DateTime.utc(2024, 12, 31),
+                                    focusedDay: selectedDay,
+                                    calendarFormat: format,
+                                    onFormatChanged: (CalendarFormat _format) {
+                                      setState(() {
+                                        format = _format;
+                                      });
+                                    },
+                                    startingDayOfWeek: StartingDayOfWeek.monday,
+                                    daysOfWeekVisible: true,
+                                    onDaySelected: (DateTime selectDay,
+                                        DateTime focusDay) {
+                                      setState(() {
+                                        focusedDay = focusDay;
+                                        selectedDay = selectDay;
+                                      });
+                                      measurements(
+                                          focusedDay.toString().split(" ")[0]);
+                                    },
+                                    calendarStyle: CalendarStyle(
+                                        isTodayHighlighted: true,
+                                        selectedDecoration: BoxDecoration(
+                                          color: Colors.blueAccent,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        todayDecoration: BoxDecoration(
+                                            color: Colors.grey,
+                                            shape: BoxShape.circle),
+                                        selectedTextStyle: TextStyle(
+                                            color: Colors.black, fontSize: 18),
+                                        todayTextStyle:
+                                            TextStyle(fontSize: 17)),
+                                    selectedDayPredicate: (DateTime date) {
+                                      return isSameDay(selectedDay, date);
+                                    },
+                                  ),
                                 ),
-                              ],
-                            ),
-                          )
-                        ],
-                      ),
-                    ],
-                  )
-                : Column(
-                    children: [
-                      new Container(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          child: new Text(
-                            _device[0].devName,
-                            style: new TextStyle(
-                                fontSize: 50.0,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Roboto"),
-                          ),
-                          padding: const EdgeInsets.only(
-                              top: 45, left: 20, bottom: 20),
-                        ),
-                      ),
-                      deviceInfo(_device[0]),
-                      new Container(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          child: new Text(
-                            "Stats",
-                            style: new TextStyle(
-                                fontSize: 40.0,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Roboto"),
-                          ),
-                          padding: const EdgeInsets.only(
-                              top: 25, left: 30, bottom: 20),
-                        ),
-                      ),
-                      Padding(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: colorPalette[2],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: TableCalendar(
-                            firstDay: DateTime.utc(2021, 6, 1),
-                            lastDay: DateTime.utc(2024, 12, 31),
-                            focusedDay: selectedDay,
-                            calendarFormat: format,
-                            onFormatChanged: (CalendarFormat _format) {
-                              setState(() {
-                                format = _format;
-                              });
-                            },
-                            startingDayOfWeek: StartingDayOfWeek.monday,
-                            daysOfWeekVisible: true,
-                            onDaySelected:
-                                (DateTime selectDay, DateTime focusDay) {
-                              setState(() {
-                                focusedDay = focusDay;
-                                selectedDay = selectDay;
-                              });
-                              measurements(focusedDay.toString().split(" ")[0]);
-                            },
-                            calendarStyle: CalendarStyle(
-                                isTodayHighlighted: true,
-                                selectedDecoration: BoxDecoration(
-                                  color: Colors.blueAccent,
-                                  shape: BoxShape.circle,
-                                ),
-                                todayDecoration: BoxDecoration(
-                                    color: Colors.grey, shape: BoxShape.circle),
-                                selectedTextStyle: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                                todayTextStyle: TextStyle(fontSize: 17)),
-                            selectedDayPredicate: (DateTime date) {
-                              return isSameDay(selectedDay, date);
-                            },
-                          ),
-                        ),
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 10),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                            color: colorPalette[2],
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(20))),
-                        child: statistics(_device[0]),
-                      ),
-                      new Container(
-                        alignment: Alignment.topLeft,
-                        child: Padding(
-                          child: new Text(
-                            "Settings",
-                            style: new TextStyle(
-                                fontSize: 40.0,
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Roboto"),
-                          ),
-                          padding: const EdgeInsets.only(
-                              top: 25, left: 30, bottom: 20),
-                        ),
-                      ),
-                      Padding(
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: colorPalette[2],
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20))),
-                          child: SwitchListTile(
-                              title: new Text(
-                                'Favourite: ',
-                                style: new TextStyle(
-                                    fontSize: 25,
-                                    color: colorPalette[0],
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: "Roboto"),
+                                padding: const EdgeInsets.only(
+                                    left: 20, right: 20, bottom: 10),
                               ),
-                              value: devFav,
-                              activeColor: Colors.blueAccent,
-                              onChanged: (bool value) {
-                                setState(() {
-                                  devFav = value;
-                                  changeDevFav(_device[0], value);
-                                  _getDevice(widget.item);
-                                  measurements(
-                                      focusedDay.toString().split(" ")[0]);
-                                });
-                              }),
-                        ),
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 10),
-                      ),
-                      Padding(
-                        child: OutlinedButton.icon(
-                          label: new Text(
-                            'Edit name',
-                            style: new TextStyle(
-                                fontSize: 25,
-                                color: colorPalette[0],
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Roboto"),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: colorPalette[2],
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(20))),
+                                child: statistics(_device[0]),
+                              ),
+                              (widget.privileges == "admin")
+                                  ? settings()
+                                  : SizedBox(
+                                      height: 30,
+                                    )
+                            ],
                           ),
-                          icon: Icon(
-                            Icons.edit,
-                            size: 18,
-                            color: colorPalette[0],
-                          ),
-                          style: OutlinedButton.styleFrom(
-                              backgroundColor: colorPalette[2],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              minimumSize:
-                                  Size(MediaQuery.of(context).size.width, 50)),
-                          onPressed: () {
-                            _editStringDialog(context, _device[0], "name");
-                          },
-                        ),
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 10),
-                      ),
-                      Padding(
-                        child: OutlinedButton.icon(
-                          label: new Text(
-                            'Edit description',
-                            style: new TextStyle(
-                                fontSize: 25,
-                                color: colorPalette[0],
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Roboto"),
-                          ),
-                          icon: Icon(Icons.edit,
-                              size: 18, color: colorPalette[0]),
-                          style: OutlinedButton.styleFrom(
-                              backgroundColor: colorPalette[2],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              minimumSize:
-                                  Size(MediaQuery.of(context).size.width, 50)),
-                          onPressed: () {
-                            _editStringDialog(context, _device[0], "desc");
-                          },
-                        ),
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 10),
-                      ),
-                      Padding(
-                        child: OutlinedButton.icon(
-                          label: new Text(
-                            'Edit icon',
-                            style: new TextStyle(
-                                fontSize: 25,
-                                color: colorPalette[0],
-                                fontWeight: FontWeight.w500,
-                                fontFamily: "Roboto"),
-                          ),
-                          icon: Icon(
-                            Icons.edit,
-                            size: 18,
-                            color: colorPalette[0],
-                          ),
-                          style: OutlinedButton.styleFrom(
-                              backgroundColor: colorPalette[2],
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(20))),
-                              minimumSize:
-                                  Size(MediaQuery.of(context).size.width, 50)),
-                          onPressed: () {
-                            _editIconDialog(context, _device[0]);
-                          },
-                        ),
-                        padding: const EdgeInsets.only(
-                            left: 20, right: 20, bottom: 10),
-                      ),
-                    ],
                   ),
-          ),
-        ),
-      ),
-    );
+                ),
+              ))
+            : Container(
+                child: new Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                        margin: EdgeInsets.only(bottom: 20),
+                        child: CircularProgressIndicator(
+                          backgroundColor: Colors.grey,
+                          color: Colors.lightBlueAccent,
+                        )),
+                    new Text(
+                      "Loading",
+                      style: TextStyle(fontSize: 30, color: Colors.blueAccent),
+                    ),
+                  ],
+                ),
+                width: MediaQuery.of(context).size.width,
+              ));
   }
 }

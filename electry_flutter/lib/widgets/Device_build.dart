@@ -73,7 +73,7 @@ _color(int state, bool backText) {
   }
 }
 
-GestureDetector _device(BuildContext context, Device item) {
+GestureDetector _device(BuildContext context, Device item, String privileges) {
   var brightness = SchedulerBinding.instance.window.platformBrightness;
   isDarkMode = brightness == Brightness.dark;
   if (isDarkMode) {
@@ -87,7 +87,7 @@ GestureDetector _device(BuildContext context, Device item) {
       Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => DeviceInfoLayout(item.devId)));
+              builder: (context) => DeviceInfoLayout(item.devId, privileges)));
     },
     child: new Container(
         child: new Padding(
@@ -137,11 +137,12 @@ GestureDetector _device(BuildContext context, Device item) {
 
 class DeviceBuilt extends StatelessWidget {
   final Device item;
-
-  const DeviceBuilt({Key key, @required this.item}) : super(key: key);
+  final String privileges;
+  const DeviceBuilt({Key key, @required this.item, this.privileges})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return _device(context, item);
+    return _device(context, item, privileges);
   }
 }

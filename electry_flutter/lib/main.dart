@@ -1,5 +1,4 @@
 import 'package:electry_flutter/MainLayout/Login_layout.dart';
-import 'package:electry_flutter/widgets/Responsive/nav_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:electry_flutter/theme_provider.dart';
 
@@ -11,7 +10,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      initialRoute: '/',
+      title: 'Electry',
       themeMode: ThemeMode.system,
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,

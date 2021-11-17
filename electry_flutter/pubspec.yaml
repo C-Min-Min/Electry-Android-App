@@ -33,6 +33,7 @@ dependencies:
   table_calendar: ^3.0.2
   fl_chart: ^0.40.0
   page_transition: "^1.1.6"
+  fluro: ^2.0.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

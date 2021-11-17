@@ -2,11 +2,11 @@ import 'package:electry_flutter/widgets/Device_build.dart';
 import 'package:electry_flutter/widgets/Responsive/responsive.dart';
 import 'package:flutter/material.dart';
 import '../api_conn/Device.dart';
-import 'Home_layout.dart';
 import '../api_conn/Services.dart';
 
 class DeviceLayout extends StatefulWidget {
-  DeviceLayout() : super();
+  final String privileges;
+  DeviceLayout(this.privileges) : super();
   @override
   DeviceLayoutState createState() => DeviceLayoutState();
 }
@@ -20,39 +20,6 @@ class DeviceLayoutState extends State<DeviceLayout> {
     super.initState();
     _devices = [];
     _getDevices();
-  }
-
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
-    });
-    pageLayout();
-  }
-
-  void pageLayout() {
-    if (selectedIndex == 0) {
-      Navigator.push(
-          context,
-          PageRouteBuilder(
-              transitionDuration: Duration(milliseconds: 300),
-              fullscreenDialog: true,
-              transitionsBuilder: (BuildContext context,
-                  Animation<double> animation,
-                  Animation<double> secAnimation,
-                  Widget child) {
-                return SlideTransition(
-                  position: Tween<Offset>(
-                    begin: Offset(-1, 0),
-                    end: Offset.zero,
-                  ).animate(animation),
-                  child: child,
-                );
-              },
-              pageBuilder: (BuildContext context, Animation<double> animation,
-                  Animation<double> secAnimation) {
-                return HomeLayout();
-              }));
-    }
   }
 
   _getDevices() {
@@ -137,6 +104,7 @@ class DeviceLayoutState extends State<DeviceLayout> {
                       return GridTile(
                           child: DeviceBuilt(
                         item: item,
+                        privileges: widget.privileges,
                       ));
                     },
                   ),

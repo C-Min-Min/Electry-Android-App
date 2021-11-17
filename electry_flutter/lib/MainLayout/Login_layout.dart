@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:electry_flutter/api_conn/Services.dart';
 import 'package:electry_flutter/widgets/Responsive/nav_layout.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 
 class LoginLayout extends StatefulWidget {
-  LoginLayout() : super();
   @override
   LoginLayoutState createState() => LoginLayoutState();
 }
@@ -17,22 +18,19 @@ class LoginLayoutState extends State<LoginLayout> {
 
   _login(String userMail, String password) {
     Services.loginUser(userMail, password).then((response) {
-      if (response) {
+      if (response.toString().isNotEmpty) {
         Navigator.push(
-            context, MaterialPageRoute(builder: (context) => NavLayout()));
-      } else {
-        wrongCredentials = true;
+            context,
+            MaterialPageRoute(
+                builder: (context) => NavLayout(response.privileges)));
       }
     });
   }
 
   final textFieldFocusNode = FocusNode();
-  final textFieldFocusNodeRepeat = FocusNode();
   bool _obscured = true;
-  bool _obscuredRepeat = true;
   final userMailController = TextEditingController();
   final passwordController = TextEditingController();
-  bool wrongCredentials = false;
 
   void _toggleObscured() {
     setState(() {
@@ -44,14 +42,38 @@ class LoginLayoutState extends State<LoginLayout> {
     });
   }
 
-  void _toggleObscuredRepeat() {
-    setState(() {
-      _obscuredRepeat = !_obscuredRepeat;
-      if (textFieldFocusNodeRepeat.hasPrimaryFocus)
-        return; // If focus is on text field, dont unfocus
-      textFieldFocusNodeRepeat.canRequestFocus =
-          false; // Prevents focus if tap on eye
-    });
+  errorDialog(int error) {
+    String errorMessage = "";
+    if (error == 0) {
+      errorMessage = "Username/Email or Password can't be empty";
+    } else if (error == 1) {
+      errorMessage = "Wrong Username/Email or Password";
+    }
+    return showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        insetPadding: EdgeInsets.symmetric(horizontal: 10),
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        title: Text('Error'),
+        content: Text(errorMessage),
+        actions: [
+          // ignore: deprecated_member_use
+          FlatButton(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(12))),
+            color: Colors.red,
+            textColor: Colors.white,
+            child: Text('Go back'),
+            onPressed: () {
+              setState(() {
+                Navigator.pop(context);
+              });
+            },
+          ),
+        ],
+      ),
+    );
   }
 
   @override
@@ -110,7 +132,7 @@ class LoginLayoutState extends State<LoginLayout> {
                       ),
                       Container(
                         width: 250,
-                        child: TextField(
+                        child: TextFormField(
                             controller: userMailController,
                             cursorColor: Colors.blueAccent,
                             style: TextStyle(color: Colors.blueAccent),
@@ -132,33 +154,46 @@ class LoginLayoutState extends State<LoginLayout> {
                       ),
                       Container(
                         width: 250,
-                        child: TextField(
-                            controller: passwordController,
-                            cursorColor: Colors.blueAccent,
-                            keyboardType: TextInputType.visiblePassword,
-                            obscureText: _obscured,
-                            focusNode: textFieldFocusNode,
-                            style: TextStyle(color: Colors.blueAccent),
-                            decoration: InputDecoration(
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.blueAccent),
+                        child: TextFormField(
+                          controller: passwordController,
+                          cursorColor: Colors.blueAccent,
+                          keyboardType: TextInputType.visiblePassword,
+                          obscureText: _obscured,
+                          focusNode: textFieldFocusNode,
+                          style: TextStyle(color: Colors.blueAccent),
+                          decoration: InputDecoration(
+                            focusedBorder: UnderlineInputBorder(
+                              borderSide: BorderSide(color: Colors.blueAccent),
+                            ),
+                            labelText: 'Password',
+                            labelStyle: TextStyle(
+                                color: Colors.blueAccent,
+                                fontFamily: 'OpenSans'),
+                            suffixIcon: GestureDetector(
+                              onTap: _toggleObscured,
+                              child: Icon(
+                                _obscured
+                                    ? Icons.visibility_rounded
+                                    : Icons.visibility_off_rounded,
+                                color: Colors.blueAccent,
+                                size: 17,
                               ),
-                              labelText: 'Password',
-                              labelStyle: TextStyle(
-                                  color: Colors.blueAccent,
-                                  fontFamily: 'OpenSans'),
-                              suffixIcon: GestureDetector(
-                                onTap: _toggleObscured,
-                                child: Icon(
-                                  _obscured
-                                      ? Icons.visibility_rounded
-                                      : Icons.visibility_off_rounded,
-                                  color: Colors.blueAccent,
-                                  size: 17,
-                                ),
-                              ),
-                            )),
+                            ),
+                          ),
+                          onFieldSubmitted: (value) {
+                            if (userMailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty) {
+                              setState(() {
+                                _login(userMailController.text,
+                                    passwordController.text);
+                                sleep(Duration(seconds: 1));
+                                errorDialog(1);
+                              });
+                            } else {
+                              errorDialog(0);
+                            }
+                          },
+                        ),
                       ),
 
                       /*Padding(
@@ -193,10 +228,17 @@ class LoginLayoutState extends State<LoginLayout> {
                             ),
                           ),
                           onTap: () {
-                            setState(() {
-                              _login(userMailController.text,
-                                  passwordController.text);
-                            });
+                            if (userMailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty) {
+                              setState(() {
+                                _login(userMailController.text,
+                                    passwordController.text);
+                                sleep(Duration(seconds: 1));
+                                errorDialog(1);
+                              });
+                            } else {
+                              errorDialog(0);
+                            }
                           },
                         ),
                       )
